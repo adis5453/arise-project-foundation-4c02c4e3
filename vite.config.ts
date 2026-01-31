@@ -21,7 +21,7 @@ export default defineConfig({
     ]
   },
   server: {
-    port: 5173,
-    force: true // Force dependency re-optimization
+    // Lovable preview expects the dev server on 8080
+    port: 8080,
   },
 })

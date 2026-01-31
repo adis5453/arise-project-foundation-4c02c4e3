@@ -6,12 +6,14 @@ import { toast } from 'sonner'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Box,
+  Badge,
   Card,
   CardContent,
   Typography,
   Button,
   TextField,
   FormControl,
+  FormControlLabel,
   InputLabel,
   Select,
   MenuItem,
@@ -25,14 +27,29 @@ import {
   IconButton,
   Avatar,
   Tooltip,
+  Fab,
   Grid,
+  Tabs,
+  Tab,
+  Switch,
+  Alert,
+  CircularProgress,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  TableContainer,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
 } from '@mui/material'
 import {
   PersonAdd,
   Edit,
   Delete,
   Visibility,
-  String as StringIcon,
+  TextFields as StringIcon,
   Search,
   FilterList,
   Download,
@@ -768,7 +785,7 @@ export default function SuperAdminUserCreation() {
       <Card>
         <Tabs
           value={activeTab}
-          onChange={(e, newValue) => setActiveTab(newValue)}
+          onChange={(_e: React.SyntheticEvent, newValue: number) => setActiveTab(newValue)}
           variant={responsive.isMobile ? "scrollable" : "standard"}
           scrollButtons="auto"
         >
