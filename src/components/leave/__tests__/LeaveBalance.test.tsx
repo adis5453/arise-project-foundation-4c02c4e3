@@ -1,4 +1,6 @@
 import { render, screen, waitFor } from '@/__tests__/test-utils';
+import { fireEvent } from '@testing-library/react';
+import { useLeaveManagement } from '@/hooks/useLeaveManagement';
 import { LeaveBalance } from '../LeaveBalance';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { vi } from 'vitest';

@@ -21,6 +21,7 @@ export interface User {
   isActive: boolean;
   permissions: string[];
   lastLogin?: string;
+  lastPasswordChange?: string;
   createdAt: string;
   updatedAt: string;
 }

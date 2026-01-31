@@ -812,7 +812,7 @@ const LeaveManager: React.FC<ComprehensiveLeaveManagementProps> = ({ className }
                                   </Typography>
                                 </Box>
                               </Stack>
-                              <StatusChip status={request.status} size="small" />
+                              <StatusChip status={request.status} size="sm" />
                             </Stack>
 
                             <Divider />
@@ -1444,7 +1444,7 @@ const LeaveManager: React.FC<ComprehensiveLeaveManagementProps> = ({ className }
                         <strong>Duration:</strong> {selectedRequest.total_days} days
                       </Typography>
                       <Typography variant="body2">
-                        <strong>Status:</strong> <StatusChip status={selectedRequest.status} size="small" />
+                        <strong>Status:</strong> <StatusChip status={selectedRequest.status} size="sm" />
                       </Typography>
                       <Typography variant="body2">
                         <strong>Priority:</strong> {selectedRequest.priority}
