@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Box, Button, Typography, TextField, Alert, Paper, Stack, Grid } from '@mui/material';
-import { api } from '../../lib/api';
+import api from '../../lib/api';
 import { toast } from 'sonner';
 
 export const MFASetup = ({ onComplete }: { onComplete: () => void }) => {
@@ -11,7 +11,7 @@ export const MFASetup = ({ onComplete }: { onComplete: () => void }) => {
 
     const startSetup = async () => {
         try {
-            const data = await api.post('/auth/mfa/setup');
+            const data = await api.post('/auth/mfa/setup', {});
             setSecret(data);
             setStep('setup');
         } catch (error) {
@@ -75,7 +75,7 @@ export const MFASetup = ({ onComplete }: { onComplete: () => void }) => {
                     <Paper variant="outlined" sx={{ p: 2, bgcolor: 'grey.50' }}>
                         <Grid container spacing={1}>
                             {backupCodes.map(code => (
-                                <Grid item xs={6} key={code}>
+                                <Grid size={{ xs: 6 }} key={code}>
                                     <Typography sx={{ fontFamily: 'monospace' }}>{code}</Typography>
                                 </Grid>
                             ))}

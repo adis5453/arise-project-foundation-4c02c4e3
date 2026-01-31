@@ -356,7 +356,7 @@ export default function DepartmentsPage() {
                     <DialogTitle>Add New {activeTab === 0 ? 'Department' : 'Position'}</DialogTitle>
                     <DialogContent>
                         <Grid container spacing={2} sx={{ mt: 1 }}>
-                            <Grid item xs={12}>
+                            <Grid size={{ xs: 12 }}>
                                 <TextField
                                     fullWidth
                                     label="Name"
@@ -366,7 +366,7 @@ export default function DepartmentsPage() {
                                 />
                             </Grid>
                             {activeTab === 0 && (
-                                <Grid item xs={12}>
+                                <Grid size={{ xs: 12 }}>
                                     <TextField
                                         fullWidth
                                         label="Code"
@@ -376,7 +376,7 @@ export default function DepartmentsPage() {
                                 </Grid>
                             )}
                             {activeTab === 1 && (
-                                <Grid item xs={12}>
+                                <Grid size={{ xs: 12 }}>
                                     <TextField
                                         fullWidth
                                         select
@@ -392,7 +392,7 @@ export default function DepartmentsPage() {
                                     </TextField>
                                 </Grid>
                             )}
-                            <Grid item xs={12}>
+                            <Grid size={{ xs: 12 }}>
                                 <TextField
                                     fullWidth
                                     label="Description"
@@ -419,7 +419,7 @@ export default function DepartmentsPage() {
                     <DialogTitle>Edit {activeTab === 0 ? 'Department' : 'Position'}</DialogTitle>
                     <DialogContent>
                         <Grid container spacing={2} sx={{ mt: 1 }}>
-                            <Grid item xs={12}>
+                            <Grid size={{ xs: 12 }}>
                                 <TextField
                                     fullWidth
                                     label="Name"
@@ -429,7 +429,7 @@ export default function DepartmentsPage() {
                                 />
                             </Grid>
                             {activeTab === 0 && (
-                                <Grid item xs={12}>
+                                <Grid size={{ xs: 12 }}>
                                     <TextField
                                         fullWidth
                                         label="Code"
@@ -438,7 +438,7 @@ export default function DepartmentsPage() {
                                     />
                                 </Grid>
                             )}
-                            <Grid item xs={12}>
+                            <Grid size={{ xs: 12 }}>
                                 <TextField
                                     fullWidth
                                     label="Description"
