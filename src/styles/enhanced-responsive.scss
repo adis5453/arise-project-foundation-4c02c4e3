@@ -1,0 +1,351 @@
+// Enhanced Responsive Design System
+// Global responsive utilities and improvements
+
+// Smooth scrolling for better UX
+html {
+  scroll-behavior: smooth;
+}
+
+// Better touch interactions on mobile
+* {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+// Enhanced focus indicators for accessibility
+:focus-visible {
+  outline: 2px solid var(--primary-color, #6366f1);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+// Improved scrollbar styling
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+  transition: background 0.2s ease;
+  
+  &:hover {
+    background: rgba(0, 0, 0, 0.3);
+  }
+}
+
+// Dark mode scrollbar
+[data-theme="dark"] {
+  ::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    
+    &:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+  }
+}
+
+// Enhanced animations and transitions
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.slide-up {
+  animation: slideUp 0.4s ease-out;
+}
+
+.scale-in {
+  animation: scaleIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+// Responsive breakpoints utilities
+.show-mobile {
+  display: block !important;
+  
+  @media (min-width: 768px) {
+    display: none !important;
+  }
+}
+
+.show-tablet {
+  display: none !important;
+  
+  @media (min-width: 768px) and (max-width: 1199px) {
+    display: block !important;
+  }
+}
+
+.show-desktop {
+  display: none !important;
+  
+  @media (min-width: 1200px) {
+    display: block !important;
+  }
+}
+
+.hide-mobile {
+  @media (max-width: 767px) {
+    display: none !important;
+  }
+}
+
+.hide-tablet {
+  @media (min-width: 768px) and (max-width: 1199px) {
+    display: none !important;
+  }
+}
+
+.hide-desktop {
+  @media (min-width: 1200px) {
+    display: none !important;
+  }
+}
+
+// Enhanced card layouts
+.enhanced-card {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-color, #6366f1), var(--secondary-color, #eab308));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    
+    &::before {
+      transform: scaleX(1);
+    }
+  }
+  
+  @media (max-width: 767px) {
+    &:hover {
+      transform: translateY(-1px);
+    }
+  }
+}
+
+// Improved button states
+.enhanced-button {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.2s ease;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+  }
+  
+  &:active::before {
+    width: 300px;
+    height: 300px;
+  }
+  
+  &:focus-visible {
+    outline: 2px solid var(--primary-color, #6366f1);
+    outline-offset: 2px;
+  }
+}
+
+// Enhanced responsive grid
+.responsive-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+  
+  @media (min-width: 600px) {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  @media (min-width: 900px) {
+    gap: 2rem;
+  }
+  
+  @media (min-width: 1200px) {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2.5rem;
+  }
+}
+
+// Enhanced responsive spacing
+.responsive-padding {
+  padding: 1rem;
+  
+  @media (min-width: 600px) {
+    padding: 1.5rem;
+  }
+  
+  @media (min-width: 900px) {
+    padding: 2rem;
+  }
+  
+  @media (min-width: 1200px) {
+    padding: 2.5rem;
+  }
+}
+
+.responsive-margin {
+  margin: 1rem;
+  
+  @media (min-width: 600px) {
+    margin: 1.5rem;
+  }
+  
+  @media (min-width: 900px) {
+    margin: 2rem;
+  }
+  
+  @media (min-width: 1200px) {
+    margin: 2.5rem;
+  }
+}
+
+// Enhanced layout for better mobile experience
+.mobile-optimized {
+  @media (max-width: 767px) {
+    padding: 0.75rem;
+    
+    .MuiCard-root {
+      border-radius: 12px;
+      margin-bottom: 1rem;
+    }
+    
+    .MuiButton-root {
+      min-height: 44px; // Better touch target
+      font-size: 0.875rem;
+    }
+    
+    .MuiIconButton-root {
+      min-width: 44px;
+      min-height: 44px;
+    }
+    
+    .MuiTypography-h4 {
+      font-size: 1.5rem;
+    }
+    
+    .MuiTypography-h5 {
+      font-size: 1.25rem;
+    }
+    
+    .MuiTypography-h6 {
+      font-size: 1.125rem;
+    }
+  }
+}
+
+// Glass morphism effect
+.glass-effect {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] .glass-effect {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+// Enhanced loading states
+.skeleton-loading {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+[data-theme="dark"] .skeleton-loading {
+  background: linear-gradient(90deg, #2a2a2a 25%, #3a3a3a 50%, #2a2a2a 75%);
+  background-size: 200% 100%;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+// Enhanced error and success states
+.status-success {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+}
+
+.status-error {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: white;
+}
+
+.status-warning {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: white;
+}
+
+.status-info {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: white;
+}
