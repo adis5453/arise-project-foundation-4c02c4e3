@@ -22,7 +22,7 @@ import {
   ArrowDownward as ArrowDownwardIcon,
   MoreVert as MoreVertIcon
 } from '@mui/icons-material'
-import { FixedSizeList as List } from 'react-window'
+import { FixedSizeList as List, type ListChildComponentProps } from 'react-window'
 import { useVirtualization } from '../../hooks/useVirtualization'
 // import { useTableData } from '../../hooks/usePerformance' // Not exported
 
@@ -69,27 +69,25 @@ interface VirtualizedTableProps<T> {
   itemsPerPage?: number
 }
 
+type VirtualizedRowData<T> = {
+  items: T[]
+  columns: Column<T>[]
+  selectedRows: Set<string | number>
+  onRowSelect?: (rowId: string | number, selected: boolean) => void
+  onRowClick?: (row: T, index: number) => void
+  onRowDoubleClick?: (row: T, index: number) => void
+  getRowId: (row: T, index: number) => string | number
+  selectable: boolean
+  hover: boolean
+  striped: boolean
+}
+
 // Row component for virtualization
-const TableRowComponent = memo(<T,>({
+const TableRowComponent = memo(function TableRowComponent<T>({
   index,
   style,
-  data
-}: {
-  index: number
-  style: React.CSSProperties
-  data: {
-    items: T[]
-    columns: Column<T>[]
-    selectedRows: Set<string | number>
-    onRowSelect?: (rowId: string | number, selected: boolean) => void
-    onRowClick?: (row: T, index: number) => void
-    onRowDoubleClick?: (row: T, index: number) => void
-    getRowId: (row: T, index: number) => string | number
-    selectable: boolean
-    hover: boolean
-    striped: boolean
-  }
-}) => {
+  data,
+}: ListChildComponentProps<VirtualizedRowData<T>>) {
   const theme = useTheme()
   const {
     items,
@@ -188,9 +186,9 @@ const TableRowComponent = memo(<T,>({
       </TableRow>
     </div>
   )
-})
+}) as <T>(props: ListChildComponentProps<VirtualizedRowData<T>>) => React.ReactElement | null
 
-TableRowComponent.displayName = 'TableRowComponent'
+(TableRowComponent as unknown as { displayName?: string }).displayName = 'TableRowComponent'
 
 // Main VirtualizedTable component
 export const VirtualizedTable = memo(<T,>({
@@ -354,6 +352,19 @@ export const VirtualizedTable = memo(<T,>({
 
   // Virtualized table
   if (virtualized) {
+    const itemData: VirtualizedRowData<T> = {
+      items: displayData,
+      columns,
+      selectedRows,
+      onRowSelect,
+      onRowClick,
+      onRowDoubleClick,
+      getRowId,
+      selectable,
+      hover,
+      striped,
+    }
+
     return (
       <TableContainer component={Paper} className={className} ref={containerRef}>
         <Table stickyHeader={stickyHeader} size={dense ? 'small' : 'medium'}>
@@ -400,24 +411,13 @@ export const VirtualizedTable = memo(<T,>({
           </TableHead>
         </Table>
         <Box height={height - (stickyHeader ? 56 : 0)}>
-          <List
+          <List<VirtualizedRowData<T>>
             width={Math.max(containerWidth, 1)}
             height={height - (stickyHeader ? 56 : 0)}
             itemCount={displayData.length}
             itemSize={rowHeight}
             overscanCount={overscan}
-            itemData={{
-              items: displayData,
-              columns: columns as Column<unknown>[],
-              selectedRows,
-              onRowSelect,
-              onRowClick: onRowClick as ((row: unknown, index: number) => void) | undefined,
-              onRowDoubleClick: onRowDoubleClick as ((row: unknown, index: number) => void) | undefined,
-              getRowId: getRowId as (row: unknown, index: number) => string | number,
-              selectable,
-              hover,
-              striped
-            }}
+            itemData={itemData}
           >
             {TableRowComponent}
           </List>
