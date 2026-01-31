@@ -16,7 +16,13 @@ describe('LeaveRequestForm', () => {
   const renderComponent = () => {
     render(
       <QueryClientProvider client={queryClient}>
-        <LeaveRequestForm onSuccess={vi.fn()} onCancel={vi.fn()} />
+        <LeaveRequestForm
+          open
+          onClose={vi.fn()}
+          employeeId="emp1"
+          editingRequest={null}
+          onSubmit={mockCreateLeaveRequest as any}
+        />
       </QueryClientProvider>
     );
   };

@@ -1,4 +1,4 @@
-import React, { memo, useMemo, useCallback, useState, useRef } from 'react'
+import React, { memo, useMemo, useCallback, useState, useRef, useLayoutEffect } from 'react'
 import {
   Box,
   Table,
@@ -104,23 +104,33 @@ const TableRowComponent = memo(<T,>({
     striped
   } = data
 
+  const handleRowClick = useCallback(() => {
+    const row = items[index]
+    if (!row) return
+    onRowClick?.(row, index)
+  }, [items, index, onRowClick])
+
+  const handleRowDoubleClick = useCallback(() => {
+    const row = items[index]
+    if (!row) return
+    onRowDoubleClick?.(row, index)
+  }, [items, index, onRowDoubleClick])
+
+  const handleSelectChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const row = items[index]
+      if (!row) return
+      const rowId = getRowId(row, index)
+      onRowSelect?.(rowId, event.target.checked)
+    },
+    [items, index, getRowId, onRowSelect]
+  )
+
   const row = items[index]
   if (!row) return null
 
   const rowId = getRowId(row, index)
   const isSelected = selectedRows.has(rowId)
-
-  const handleRowClick = useCallback(() => {
-    onRowClick?.(row, index)
-  }, [row, index, onRowClick])
-
-  const handleRowDoubleClick = useCallback(() => {
-    onRowDoubleClick?.(row, index)
-  }, [row, index, onRowDoubleClick])
-
-  const handleSelectChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    onRowSelect?.(rowId, event.target.checked)
-  }, [rowId, onRowSelect])
 
   return (
     <div style={style}>
@@ -231,6 +241,26 @@ export const VirtualizedTable = memo(<T,>({
 
   // Virtualization setup
   const containerRef = useRef<HTMLDivElement>(null)
+
+  // react-window requires an explicit width
+  const [containerWidth, setContainerWidth] = useState<number>(0)
+
+  useLayoutEffect(() => {
+    const el = containerRef.current
+    if (!el) return
+
+    const update = () => {
+      const next = el.clientWidth
+      // Avoid extra renders from subpixel changes
+      setContainerWidth(prev => (Math.abs(prev - next) > 1 ? next : prev))
+    }
+
+    update()
+
+    const ro = new ResizeObserver(() => update())
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [])
 
   // Handle sort
   const handleSort = useCallback((column: Column<T>) => {
@@ -371,6 +401,7 @@ export const VirtualizedTable = memo(<T,>({
         </Table>
         <Box height={height - (stickyHeader ? 56 : 0)}>
           <List
+            width={Math.max(containerWidth, 1)}
             height={height - (stickyHeader ? 56 : 0)}
             itemCount={displayData.length}
             itemSize={rowHeight}

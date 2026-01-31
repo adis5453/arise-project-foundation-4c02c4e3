@@ -16,7 +16,7 @@ export { CustomizableDashboard, DashboardCustomizer, AnimatedStats }
 // Employee Components
 // import { AdvancedEmployeeDirectory } from './employees/AdvancedEmployeeDirectory'
 import EmployeeManagement from './employees/EmployeeManagement'
-import { EmployeeCards } from './employees/EmployeeCards'
+import EmployeeCards from './employees/EmployeeCards'
 // import { EmployeeDirectory } from './employees/EmployeeDirectory'
 export { EmployeeManagement, EmployeeCards }
 

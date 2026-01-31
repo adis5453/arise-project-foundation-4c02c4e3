@@ -2,6 +2,7 @@ import { render, screen, fireEvent, waitFor } from '@/__tests__/test-utils';
 import { LeaveCalendar } from '../LeaveCalendar';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { vi } from 'vitest';
+import { useLeaveManagement } from '@/hooks/useLeaveManagement';
 
 // Mock data
 const mockTeamLeaves = [

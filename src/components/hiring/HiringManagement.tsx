@@ -302,7 +302,9 @@ const HiringManagement: React.FC = () => {
   const { data: onboardingTasks, isLoading: onboardingLoading } = useQuery({
     queryKey: ['onboarding-tasks'],
     queryFn: async () => {
-      const data = await DatabaseService.getOnboardingTasks()
+      const employeeId = (profile as any)?.employee_id ?? (profile as any)?.id ?? ''
+      if (!employeeId) return []
+      const data = await DatabaseService.getOnboardingTasks(employeeId)
       return data as OnboardingTask[]
     },
     enabled: canView('employees')
