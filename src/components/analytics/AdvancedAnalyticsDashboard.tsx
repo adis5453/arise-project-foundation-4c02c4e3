@@ -39,6 +39,7 @@ import {
   Star,
   Warning,
   CheckCircle,
+  BarChart,
 } from '@mui/icons-material'
 import { useResponsive } from '../../hooks/useResponsive'
 import * as buttonHandlers from '../../utils/buttonHandlers'
