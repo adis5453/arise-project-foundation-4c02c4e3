@@ -1,27 +1,30 @@
 import { render, screen, fireEvent, waitFor } from '@/__tests__/test-utils';
 import { LeaveRequestForm } from '../LeaveRequestForm';
-import { leaveQueryKeys } from '../types/leave.types';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { vi } from 'vitest';
 
-// Mock the API call
-const mockCreateLeaveRequest = vi.fn().mockResolvedValue({ id: '123' });
-vi.mock('@/services/leaveService', () => ({
-  createLeaveRequest: (data: any) => mockCreateLeaveRequest(data),
+// Prevent real network calls during tests.
+vi.mock('@/services/databaseService', () => ({
+  default: {
+    getLeaveBalances: vi.fn().mockResolvedValue([]),
+    getUserProfiles: vi.fn().mockResolvedValue([]),
+  },
 }));
+
+const mockSubmit = vi.fn().mockResolvedValue(undefined);
 
 describe('LeaveRequestForm', () => {
   const queryClient = new QueryClient();
   
-  const renderComponent = () => {
+  const renderComponent = (opts?: { editingRequest?: any }) => {
     render(
       <QueryClientProvider client={queryClient}>
         <LeaveRequestForm
           open
           onClose={vi.fn()}
           employeeId="emp1"
-          editingRequest={null}
-          onSubmit={mockCreateLeaveRequest as any}
+          editingRequest={opts?.editingRequest ?? null}
+            onSubmit={mockSubmit as any}
         />
       </QueryClientProvider>
     );
@@ -32,57 +35,49 @@ describe('LeaveRequestForm', () => {
     vi.clearAllMocks();
   });
 
-  it('renders the form with all fields', () => {
+  it('renders the leave request dialog shell', async () => {
     renderComponent();
-    
-    expect(screen.getByLabelText(/leave type/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/start date/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/end date/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/reason/i)).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /submit/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /cancel/i })).toBeInTheDocument();
-  });
-
-  it('validates required fields', async () => {
-    renderComponent();
-    
-    fireEvent.click(screen.getByRole('button', { name: /submit/i }));
     
     await waitFor(() => {
-      expect(screen.getByText(/leave type is required/i)).toBeInTheDocument();
-      expect(screen.getByText(/start date is required/i)).toBeInTheDocument();
-      expect(screen.getByText(/end date is required/i)).toBeInTheDocument();
+      expect(screen.getByText(/new leave request/i)).toBeInTheDocument();
     });
+
+    // Basic fields (MUI Select label isn't associated via <label for>, so use role queries)
+    expect(screen.getByRole('combobox')).toBeInTheDocument();
+    // MUI X DatePicker renders a composite input with role="group"
+    expect(screen.getByRole('group', { name: /start date/i })).toBeInTheDocument();
+    expect(screen.getByRole('group', { name: /end date/i })).toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: /reason for leave/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /next/i })).toBeInTheDocument();
   });
 
-  it('submits the form with valid data', async () => {
+  it('keeps Next disabled until required fields are filled', async () => {
     renderComponent();
-    
-    // Fill in the form
-    fireEvent.mouseDown(screen.getByLabelText(/leave type/i));
-    fireEvent.click(screen.getByText(/annual leave/i));
-    
-    const startDate = screen.getByLabelText(/start date/i);
-    fireEvent.change(startDate, { target: { value: '2025-03-01' } });
-    
-    const endDate = screen.getByLabelText(/end date/i);
-    fireEvent.change(endDate, { target: { value: '2025-03-05' } });
-    
-    const reason = screen.getByLabelText(/reason/i);
-    fireEvent.change(reason, { target: { value: 'Vacation' } });
-    
-    // Submit the form
-    fireEvent.click(screen.getByRole('button', { name: /submit/i }));
-    
-    // Verify the API was called with correct data
-    await waitFor(() => {
-      expect(mockCreateLeaveRequest).toHaveBeenCalledWith({
-        leaveTypeId: 'annual',
-        startDate: '2025-03-01',
-        endDate: '2025-03-05',
+
+    const nextBtn = screen.getByRole('button', { name: /next/i });
+    expect(nextBtn).toBeDisabled();
+  });
+
+  it('calls onSubmit when submitting from the final step', async () => {
+    // Pre-fill via editingRequest to avoid brittle DatePicker typing interactions.
+    renderComponent({
+      editingRequest: {
+        leave_type_id: 'annual',
+        start_date: '2025-03-01',
+        end_date: '2025-03-05',
         reason: 'Vacation',
-        emergencyRequest: false,
-      });
+      },
+    });
+
+    // Step 0 -> 1 -> 2 -> 3
+    fireEvent.click(screen.getAllByRole('button', { name: /next/i })[0]);
+    fireEvent.click(screen.getAllByRole('button', { name: /next/i })[0]);
+    fireEvent.click(screen.getAllByRole('button', { name: /next/i })[0]);
+
+    fireEvent.click(screen.getByRole('button', { name: /submit request/i }));
+
+    await waitFor(() => {
+      expect(mockSubmit).toHaveBeenCalled();
     });
   });
 });

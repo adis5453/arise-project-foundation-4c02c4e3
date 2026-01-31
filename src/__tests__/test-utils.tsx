@@ -3,6 +3,8 @@ import { render, RenderOptions } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 const theme = createTheme({
   // Match your app's theme configuration
@@ -31,7 +33,9 @@ const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
-        <MemoryRouter initialEntries={['/']}>{children}</MemoryRouter>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <MemoryRouter initialEntries={['/']}>{children}</MemoryRouter>
+        </LocalizationProvider>
       </ThemeProvider>
     </QueryClientProvider>
   );

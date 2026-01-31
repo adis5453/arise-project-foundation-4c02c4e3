@@ -1,7 +1,7 @@
 // Setup file for Jest tests
 import '@testing-library/jest-dom';
 import {cleanup} from '@testing-library/react';
-import {afterEach} from 'vitest';
+import { afterEach, vi } from 'vitest';
 
 // Mock global objects
 Object.defineProperty(window, 'matchMedia', {
@@ -17,6 +17,16 @@ Object.defineProperty(window, 'matchMedia', {
     dispatchEvent: vi.fn()
   }))
 });
+
+// MUI + virtualization libs often require ResizeObserver in tests
+class ResizeObserverMock {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+(globalThis as any).ResizeObserver = ResizeObserverMock;
 
 // Cleanup after each test
 afterEach(() => {
