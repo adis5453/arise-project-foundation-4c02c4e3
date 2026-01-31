@@ -1,0 +1,29 @@
+﻿src/components/common/VirtualizedTable.tsx(373,11): error TS2769: No overload matches this call.
+  Overload 2 of 2, '(props: FixedSizeListProps<{ items: unknown[]; columns: Column<unknown>[]; selectedRows: Set<string | number>; onRowSelect?: ((rowId: string | number, selected: boolean) => void) | undefined; onRowClick?: ((row: unknown, index: number) => void) | undefined; ... 4 more ...; striped: boolean; }>, context: any): FixedSizeList<...>', gave the following error.
+    Type 'Column<T>[]' is not assignable to type 'Column<unknown>[]'.
+  Overload 2 of 2, '(props: FixedSizeListProps<{ items: unknown[]; columns: Column<unknown>[]; selectedRows: Set<string | number>; onRowSelect?: ((rowId: string | number, selected: boolean) => void) | undefined; onRowClick?: ((row: unknown, index: number) => void) | undefined; ... 4 more ...; striped: boolean; }>, context: any): FixedSizeList<...>', gave the following error.
+    Type '((row: T, index: number) => void) | undefined' is not assignable to type '((row: unknown, index: number) => void) | undefined'.
+  Overload 2 of 2, '(props: FixedSizeListProps<{ items: unknown[]; columns: Column<unknown>[]; selectedRows: Set<string | number>; onRowSelect?: ((rowId: string | number, selected: boolean) => void) | undefined; onRowClick?: ((row: unknown, index: number) => void) | undefined; ... 4 more ...; striped: boolean; }>, context: any): FixedSizeList<...>', gave the following error.
+    Type '((row: T, index: number) => void) | undefined' is not assignable to type '((row: unknown, index: number) => void) | undefined'.
+  Overload 2 of 2, '(props: FixedSizeListProps<{ items: unknown[]; columns: Column<unknown>[]; selectedRows: Set<string | number>; onRowSelect?: ((rowId: string | number, selected: boolean) => void) | undefined; onRowClick?: ((row: unknown, index: number) => void) | undefined; ... 4 more ...; striped: boolean; }>, context: any): FixedSizeList<...>', gave the following error.
+    Type '(row: T, index: number) => string | number' is not assignable to type '(row: unknown, index: number) => string | number'.
+src/components/leave/__tests__/LeaveAnalytics.test.tsx(91,5): error TS2304: Cannot find name 'fireEvent'.
+src/components/leave/__tests__/LeaveAnalytics.test.tsx(95,5): error TS2304: Cannot find name 'fireEvent'.
+src/components/leave/__tests__/LeaveAnalytics.test.tsx(106,15): error TS2304: Cannot find name 'useLeaveManagement'.
+src/components/leave/__tests__/LeaveAnalytics.test.tsx(121,15): error TS2304: Cannot find name 'useLeaveManagement'.
+src/components/leave/__tests__/LeaveAnalytics.test.tsx(146,5): error TS2304: Cannot find name 'fireEvent'.
+src/components/leave/__tests__/LeaveAnalytics.test.tsx(159,5): error TS2304: Cannot find name 'fireEvent'.
+src/components/leave/__tests__/LeaveAnalytics.test.tsx(163,5): error TS2304: Cannot find name 'fireEvent'.
+src/components/leave/__tests__/LeaveBalance.test.tsx(2,30): error TS2307: Cannot find module '../LeaveBalance' or its corresponding type declarations.
+src/components/leave/__tests__/LeaveBalance.test.tsx(89,15): error TS2304: Cannot find name 'useLeaveManagement'.
+src/components/leave/__tests__/LeaveBalance.test.tsx(104,15): error TS2304: Cannot find name 'useLeaveManagement'.
+src/components/leave/__tests__/LeaveBalance.test.tsx(129,5): error TS2304: Cannot find name 'fireEvent'.
+src/components/leave/__tests__/LeaveCalendar.test.tsx(194,15): error TS2304: Cannot find name 'useLeaveManagement'.
+src/components/leave/__tests__/LeaveCalendar.test.tsx(209,15): error TS2304: Cannot find name 'useLeaveManagement'.
+src/components/leave/__tests__/LeaveList.test.tsx(2,27): error TS2307: Cannot find module '../LeaveList' or its corresponding type declarations.
+src/components/leave/__tests__/LeaveList.test.tsx(78,15): error TS2304: Cannot find name 'useLeaveManagement'.
+src/components/leave/__tests__/LeaveList.test.tsx(93,15): error TS2304: Cannot find name 'useLeaveManagement'.
+src/components/leave/__tests__/LeaveList.test.tsx(111,5): error TS2304: Cannot find name 'fireEvent'.
+src/components/leave/__tests__/LeaveList.test.tsx(114,5): error TS2304: Cannot find name 'fireEvent'.
+src/components/leave/__tests__/LeaveRequestForm.test.tsx(19,27): error TS2322: Type '{ onSuccess: Mock<Procedure>; onCancel: Mock<Procedure>; }' is not assignable to type 'IntrinsicAttributes & LeaveRequestFormProps'.
+  Property 'onSuccess' does not exist on type 'IntrinsicAttributes & LeaveRequestFormProps'.
