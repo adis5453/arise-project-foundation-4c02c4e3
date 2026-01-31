@@ -58,10 +58,25 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { motion, AnimatePresence } from 'framer-motion'
 import { StatusChip } from '../common/StatusChip'
 import DatabaseService from '../../services/databaseService'
-import { SupabaseDatabase } from '../../types/database'
 import dayjs, { Dayjs } from 'dayjs'
 
-type Tables = SupabaseDatabase
+// NOTE: This component previously depended on a legacy DB type file that diverged from the
+// generated backend types and caused production build errors. For now, keep a small local
+// submit payload type aligned with what the UI collects.
+export type LeaveRequestSubmitPayload = {
+  employee_id: string
+  leave_type_id: string
+  start_date: string
+  end_date: string
+  reason?: string
+  status?: string
+  // Optional, used by this UI but may not exist in the current backend schema yet
+  is_half_day?: boolean
+  emergency_contact?: string
+  return_date?: string | null
+  handover_notes?: string
+  days_requested?: number
+}
 
 interface ConflictInfo {
   type: 'team_understaffed' | 'manager_unavailable' | 'overlapping_request' | 'critical_period'
@@ -91,8 +106,8 @@ interface DelegationTask {
 interface LeaveRequestFormProps {
   open: boolean
   onClose: () => void
-  onSubmit: (request: Partial<Tables['leave_requests']['Insert']>) => Promise<void>
-  editingRequest?: Tables['leave_requests']['Row'] | null
+  onSubmit: (request: LeaveRequestSubmitPayload) => Promise<void>
+  editingRequest?: any | null
   employeeId: string
 }
 

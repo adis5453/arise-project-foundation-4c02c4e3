@@ -8,7 +8,10 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: ['./src/__tests__/setup.ts'],
-    include: ['**/*.{test,spec}.{js,ts,jsx,tsx}'],
+    // Only run tests from the main app source tree.
+    // This repo still contains a legacy /frontend folder that should not be part of the build/test pipeline.
+    include: ['src/**/*.{test,spec}.{js,ts,jsx,tsx}'],
+    exclude: ['**/node_modules/**', 'frontend/**'],
     coverage: {
       reporter: ['text', 'json', 'html'],
       exclude: [
