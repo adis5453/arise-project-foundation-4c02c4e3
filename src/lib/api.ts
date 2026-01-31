@@ -1,6 +1,272 @@
-import { User } from '../types/user.types';
+import { supabase } from '@/integrations/supabase/client'
+import { User } from '../types/user.types'
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api'
+
+// Cloud-first: in hosted preview/build, localhost backends are unreachable.
+const USE_CLOUD_BACKEND = !import.meta.env.VITE_API_URL || /localhost|127\.0\.0\.1/i.test(import.meta.env.VITE_API_URL)
+
+type CloudRequestOptions = {
+  method: string
+  body?: any
+  params?: Record<string, any>
+}
+
+async function cloudRequest(endpoint: string, options: CloudRequestOptions) {
+  const method = (options.method || 'GET').toUpperCase()
+  const params = options.params ?? {}
+  const body = options.body
+
+  // Auth/user
+  if (endpoint === '/auth/me' && method === 'GET') {
+    const { data: auth } = await supabase.auth.getUser()
+    const authUser = auth.user
+    if (!authUser) return { user: null }
+
+    await supabase.from('profiles').upsert({ id: authUser.id, email: authUser.email ?? null }, { onConflict: 'id' })
+    const [{ data: profile }, { data: roles }] = await Promise.all([
+      supabase.from('profiles').select('*').eq('id', authUser.id).maybeSingle(),
+      supabase.from('user_roles').select('role').eq('user_id', authUser.id),
+    ])
+
+    return {
+      user: {
+        id: authUser.id,
+        email: authUser.email,
+        first_name: profile?.first_name ?? null,
+        last_name: profile?.last_name ?? null,
+        avatar_url: profile?.avatar_url ?? null,
+        role: roles?.[0]?.role ?? 'employee',
+        role_name: roles?.[0]?.role ?? 'employee',
+      },
+    }
+  }
+
+  // Employees
+  if (endpoint === '/employees' && method === 'GET') {
+    let q = supabase.from('employees').select('*')
+    if (params.status) q = q.eq('status', params.status)
+    if (params.departmentId) q = q.eq('department_id', params.departmentId)
+    if (params.limit) q = q.limit(Number(params.limit))
+    const { data, error } = await q
+    if (error) throw new Error(error.message)
+    return data ?? []
+  }
+
+  if (endpoint.startsWith('/employees/') && method === 'GET') {
+    const id = endpoint.split('/')[2]
+    const { data, error } = await supabase.from('employees').select('*').eq('id', id).maybeSingle()
+    if (error) throw new Error(error.message)
+    return data
+  }
+
+  if (endpoint === '/employees' && method === 'POST') {
+    const { data, error } = await supabase.from('employees').insert(body).select('*').maybeSingle()
+    if (error) throw new Error(error.message)
+    return data
+  }
+
+  if (endpoint.startsWith('/employees/') && method === 'PUT') {
+    const id = endpoint.split('/')[2]
+    const { data, error } = await supabase.from('employees').update(body).eq('id', id).select('*').maybeSingle()
+    if (error) throw new Error(error.message)
+    return data
+  }
+
+  if (endpoint.startsWith('/employees/') && method === 'DELETE') {
+    const id = endpoint.split('/')[2]
+    const { error } = await supabase.from('employees').delete().eq('id', id)
+    if (error) throw new Error(error.message)
+    return { success: true }
+  }
+
+  // Departments
+  if (endpoint === '/departments' && method === 'GET') {
+    const { data, error } = await supabase.from('departments').select('*').order('name')
+    if (error) throw new Error(error.message)
+    return data ?? []
+  }
+
+  if (endpoint === '/departments' && method === 'POST') {
+    const { data, error } = await supabase.from('departments').insert(body).select('*').maybeSingle()
+    if (error) throw new Error(error.message)
+    return data
+  }
+
+  if (endpoint.startsWith('/departments/') && method === 'PUT') {
+    const id = endpoint.split('/')[2]
+    const { data, error } = await supabase.from('departments').update(body).eq('id', id).select('*').maybeSingle()
+    if (error) throw new Error(error.message)
+    return data
+  }
+
+  if (endpoint.startsWith('/departments/') && method === 'DELETE') {
+    const id = endpoint.split('/')[2]
+    const { error } = await supabase.from('departments').delete().eq('id', id)
+    if (error) throw new Error(error.message)
+    return { success: true }
+  }
+
+  // Positions
+  if (endpoint.startsWith('/positions') && method === 'GET') {
+    let q = supabase.from('positions').select('*').order('name')
+    if (params.departmentId) q = q.eq('department_id', params.departmentId)
+    const { data, error } = await q
+    if (error) throw new Error(error.message)
+    return data ?? []
+  }
+
+  if (endpoint === '/positions' && method === 'POST') {
+    const { data, error } = await supabase.from('positions').insert(body).select('*').maybeSingle()
+    if (error) throw new Error(error.message)
+    return data
+  }
+
+  // Teams
+  if (endpoint.startsWith('/teams') && method === 'GET') {
+    let q = supabase.from('teams').select('*').order('name')
+    if (params.departmentId) q = q.eq('department_id', params.departmentId)
+    const { data, error } = await q
+    if (error) throw new Error(error.message)
+    return data ?? []
+  }
+
+  if (endpoint === '/teams' && method === 'POST') {
+    const { data, error } = await supabase.from('teams').insert(body).select('*').maybeSingle()
+    if (error) throw new Error(error.message)
+    return data
+  }
+
+  if (endpoint.startsWith('/teams/') && method === 'PUT') {
+    const id = endpoint.split('/')[2]
+    const { data, error } = await supabase.from('teams').update(body).eq('id', id).select('*').maybeSingle()
+    if (error) throw new Error(error.message)
+    return data
+  }
+
+  // Projects
+  if (endpoint === '/projects' && method === 'GET') {
+    const { data, error } = await supabase.from('projects').select('*').order('created_at', { ascending: false })
+    if (error) throw new Error(error.message)
+    return data ?? []
+  }
+
+  if (endpoint === '/projects' && method === 'POST') {
+    const { data, error } = await supabase.from('projects').insert(body).select('*').maybeSingle()
+    if (error) throw new Error(error.message)
+    return data
+  }
+
+  if (endpoint.startsWith('/projects/') && method === 'PUT') {
+    const id = endpoint.split('/')[2]
+    const { data, error } = await supabase.from('projects').update(body).eq('id', id).select('*').maybeSingle()
+    if (error) throw new Error(error.message)
+    return data
+  }
+
+  if (endpoint.startsWith('/projects/') && method === 'DELETE') {
+    const id = endpoint.split('/')[2]
+    const { error } = await supabase.from('projects').delete().eq('id', id)
+    if (error) throw new Error(error.message)
+    return { success: true }
+  }
+
+  // Leave
+  if (endpoint.startsWith('/leaves/types') && method === 'GET') {
+    const { data, error } = await supabase.from('leave_types').select('*').order('name')
+    if (error) throw new Error(error.message)
+    return data ?? []
+  }
+
+  if (endpoint.startsWith('/leaves/requests') && method === 'GET') {
+    let q = supabase.from('leave_requests').select('*').order('created_at', { ascending: false })
+    if (params.employeeId) q = q.eq('employee_id', params.employeeId)
+    if (params.status) q = q.eq('status', params.status)
+    if (params.startDate) q = q.gte('start_date', params.startDate)
+    if (params.endDate) q = q.lte('end_date', params.endDate)
+    const { data, error } = await q
+    if (error) throw new Error(error.message)
+    return data ?? []
+  }
+
+  if (endpoint.startsWith('/leaves/requests') && method === 'POST') {
+    const { data, error } = await supabase.from('leave_requests').insert(body).select('*').maybeSingle()
+    if (error) throw new Error(error.message)
+    return data
+  }
+
+  // Attendance
+  if (endpoint.startsWith('/attendance') && method === 'GET') {
+    // maps old /attendance?employeeId&startDate&endDate&status to attendance_records
+    let q = supabase.from('attendance_records').select('*').order('date', { ascending: false })
+    if (params.employeeId) q = q.eq('employee_id', params.employeeId)
+    if (params.status) q = q.eq('status', params.status)
+    if (params.startDate) q = q.gte('date', params.startDate)
+    if (params.endDate) q = q.lte('date', params.endDate)
+    const { data, error } = await q
+    if (error) throw new Error(error.message)
+    return data ?? []
+  }
+
+  if (endpoint === '/attendance/clock-in' && method === 'POST') {
+    const { data: auth } = await supabase.auth.getUser()
+    if (!auth.user) throw new Error('Not authenticated')
+    const { data: emp } = await supabase.from('employees').select('id').eq('user_id', auth.user.id).maybeSingle()
+    if (!emp?.id) throw new Error('No employee record for user')
+
+    const today = new Date().toISOString().slice(0, 10)
+    const payload = {
+      employee_id: emp.id,
+      date: today,
+      clock_in: new Date().toISOString(),
+      notes: body?.notes ?? null,
+      location: body?.latitude || body?.longitude ? { latitude: body.latitude, longitude: body.longitude } : null,
+      status: 'present' as const,
+    }
+    const { data, error } = await supabase
+      .from('attendance_records')
+      .upsert([payload], { onConflict: 'employee_id,date' })
+      .select('*')
+    if (error) throw new Error(error.message)
+    return (data ?? [])[0] ?? null
+  }
+
+  if (endpoint === '/attendance/clock-out' && method === 'POST') {
+    const { data: auth } = await supabase.auth.getUser()
+    if (!auth.user) throw new Error('Not authenticated')
+    const { data: emp } = await supabase.from('employees').select('id').eq('user_id', auth.user.id).maybeSingle()
+    if (!emp?.id) throw new Error('No employee record for user')
+    const today = new Date().toISOString().slice(0, 10)
+    const { data, error } = await supabase
+      .from('attendance_records')
+      .update({ clock_out: new Date().toISOString(), notes: body?.notes ?? null })
+      .eq('employee_id', emp.id)
+      .eq('date', today)
+      .select('*')
+      .maybeSingle()
+    if (error) throw new Error(error.message)
+    return data
+  }
+
+  // System settings: store in system_settings row with key='system'
+  if (endpoint === '/settings/system' && method === 'GET') {
+    const { data, error } = await supabase.from('system_settings').select('*').eq('key', 'system').maybeSingle()
+    if (error) throw new Error(error.message)
+    return data?.value ?? {}
+  }
+
+  if (endpoint === '/settings/system' && method === 'PUT') {
+    const { data, error } = await supabase
+      .from('system_settings')
+      .upsert({ key: 'system', value: body }, { onConflict: 'key' })
+      .select('*')
+      .maybeSingle()
+    if (error) throw new Error(error.message)
+    return data?.value ?? {}
+  }
+
+  throw new Error(`Cloud backend: unsupported endpoint ${method} ${endpoint}`)
+}
 
 // Extended request options with params support
 interface ApiRequestOptions extends RequestInit {
@@ -110,6 +376,15 @@ class ApiClient {
 
     public async request(endpoint: string, options: ApiRequestOptions = {}) {
         const { params, ...fetchOptions } = options;
+
+        if (USE_CLOUD_BACKEND) {
+            const body = fetchOptions.body ? JSON.parse(String(fetchOptions.body)) : undefined
+            return cloudRequest(endpoint, {
+              method: fetchOptions.method || 'GET',
+              body,
+              params,
+            })
+        }
 
         // Auto-refresh token if expired (except for auth endpoints)
         if (!endpoint.startsWith('/auth/') && this.token && this.isTokenExpired()) {
@@ -239,6 +514,11 @@ class ApiClient {
     }
 
     async getUser() {
+        if (USE_CLOUD_BACKEND) {
+            const data = await this.get('/auth/me')
+            return data?.user ?? null
+        }
+
         // Try to get from server first
         try {
             if (this.token && !this.isTokenExpired()) {
