@@ -64,6 +64,9 @@ const AIAttendanceAnalyzer = lazy(() => import('./components/ai/AIAttendanceAnal
 const AILeaveRecommendations = lazy(() => import('./components/ai/AILeaveRecommendations'))
 const HRChatbot = lazy(() => import('./components/ai/HRChatbot'))
 
+// Public marketing page
+const HomePage = lazy(() => import('./pages/HomePage'))
+
 // Simple loading fallback
 
 
@@ -109,6 +112,16 @@ function SimpleRoute({ children }: { children: React.ReactNode }) {
 function AppRoutes() {
   return (
     <Routes>
+      {/* Public marketing homepage */}
+      <Route
+        path="/"
+        element={
+          <SimpleRoute>
+            <HomePage />
+          </SimpleRoute>
+        }
+      />
+
       {/* Role-based login routes */}
       <Route path="/login" element={<UnifiedLoginPage />} />
       <Route path="/login/simple" element={<LoginPage />} />
