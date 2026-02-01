@@ -6,6 +6,13 @@ import "./App.css";
 import ErrorBoundary from "./components/common/ErrorBoundary";
 // Removed test imports - unnecessary in production
 
+// Ensure the static HTML "initial loader" never gets stuck on screen.
+// (In dev/HMR scenarios the window 'load' event can be missed.)
+const initialLoader = document.getElementById('initial-loader')
+if (initialLoader) {
+  initialLoader.remove()
+}
+
 // Service worker registration disabled to avoid MIME type errors
 // if ('serviceWorker' in navigator) {
 //   window.addEventListener('load', () => {
