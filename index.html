@@ -69,47 +69,11 @@
         flex-direction: column;
       }
       
-      /* Loading spinner for initial load */
-      .initial-loader {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      }
-      
-      .spinner {
-        width: 50px;
-        height: 50px;
-        border: 3px solid rgba(255, 255, 255, 0.3);
-        border-radius: 50%;
-        border-top-color: #fff;
-        animation: spin 1s ease-in-out infinite;
-      }
-      
-      @keyframes spin {
-        to { transform: rotate(360deg); }
-      }
+      /* (Removed) legacy initial loader */
     </style>
   </head>
   <body>
-    <!-- Initial loading state -->
-    <div id="initial-loader" class="initial-loader">
-      <div class="spinner"></div>
-    </div>
-    
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    
-    <!-- Remove initial loader after app loads -->
-    <script>
-      window.addEventListener('load', () => {
-        const loader = document.getElementById('initial-loader');
-        if (loader) {
-          loader.style.opacity = '0';
-          setTimeout(() => loader.remove(), 300);
-        }
-      });
-    </script>
   </body>
 </html>
