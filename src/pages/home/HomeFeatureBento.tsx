@@ -69,7 +69,7 @@ export function HomeFeatureBento() {
             {FEATURES.map(({ icon: Icon, title, desc, span }) => (
               <div
                 key={title}
-                className={`group rounded-3xl border border-background/10 bg-background/5 p-6 text-background shadow-denim-sm backdrop-blur transition hover:bg-background/10 hover:shadow-denim-hover ${span}`}
+                className={`group rounded-3xl border border-background/10 bg-background/5 p-6 text-background shadow-denim-md backdrop-blur transition hover:bg-background/8 hover:shadow-denim-hover ${span}`}
               >
                 <div className="flex items-center gap-3">
                   <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-brand-secondary text-brand-secondary-foreground shadow-denim-sm">
