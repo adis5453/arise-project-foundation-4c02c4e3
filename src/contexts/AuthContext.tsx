@@ -22,6 +22,21 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
+  // Safety valve: never allow the app to be stuck in "loading" forever.
+  // If the session request hangs for any reason, we still want the UI to
+  // progress and let guards redirect to /login.
+  useEffect(() => {
+    if (!loading) return
+
+    const timeoutId = window.setTimeout(() => {
+      setLoading(false)
+    }, 8000)
+
+    return () => {
+      window.clearTimeout(timeoutId)
+    }
+  }, [loading])
+
   const getPostLoginRoute = (roleName?: string) => {
     const role = String(roleName || 'employee')
     if (['super_admin', 'hr_manager', 'hr_staff'].includes(role)) return '/dashboard'
@@ -91,6 +106,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         if (!mounted) return
         if (!session) {
           setUser(null)
+          setLoading(false)
           return
         }
         const u = await buildUserFromSession(session)
@@ -98,6 +114,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       } catch (e) {
         console.error('Auth state change error', e)
         setUser(null)
+      } finally {
+        // Ensure we always exit the "auth checking" loading state.
+        if (mounted) setLoading(false)
       }
     })
 
