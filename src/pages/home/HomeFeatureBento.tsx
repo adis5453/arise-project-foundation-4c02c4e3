@@ -36,8 +36,8 @@ const FEATURES = [
 
 export function HomeFeatureBento() {
   return (
-    <section id="features" className="mx-auto max-w-6xl px-6 py-16">
-      <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
+    <section id="features" className="mx-auto max-w-6xl px-6 py-20">
+      <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
         <div>
           <h2 className="text-3xl font-semibold tracking-tight">Built for modern HR teams</h2>
           <p className="mt-3 text-muted-foreground">
@@ -59,9 +59,8 @@ export function HomeFeatureBento() {
                 <h3 className="font-semibold tracking-tight">{title}</h3>
               </div>
               <p className="mt-3 text-sm text-muted-foreground">{desc}</p>
-              <div className="mt-5 h-px w-full bg-border/60" />
               <p className="mt-4 text-xs text-muted-foreground">
-                Designed to feel fast: clear hierarchy, bento layouts, and role-aware navigation.
+                Role-aware navigation with guarded modules and approvals.
               </p>
             </div>
           ))}
