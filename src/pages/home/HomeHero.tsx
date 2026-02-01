@@ -30,8 +30,8 @@ export function HomeHero() {
         <IsoLevelWarp className="h-full w-full" color="14, 165, 233" speed={0.6} density={56} />
       </div>
 
-      <div className="mx-auto max-w-6xl px-6 pb-16 pt-14 sm:pb-20 sm:pt-16">
-        <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr]">
+      <div className="mx-auto max-w-7xl px-6 pb-16 pt-14 sm:pb-20 sm:pt-16 2xl:max-w-[1400px] 2xl:px-10">
+        <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] xl:grid-cols-[1.1fr_0.9fr]">
           <div className="relative">
             <p className="inline-flex w-fit items-center gap-2 rounded-full border border-border bg-card/60 px-4 py-2 text-sm text-muted-foreground backdrop-blur">
               Built for teams that move fast
@@ -71,7 +71,7 @@ export function HomeHero() {
             </ul>
           </div>
 
-          <div className="mx-auto w-full max-w-[520px] lg:mx-0 lg:justify-self-end">
+          <div className="mx-auto w-full max-w-[560px] lg:mx-0 lg:justify-self-end xl:max-w-[620px]">
             <HomeProductPreview />
           </div>
         </div>
