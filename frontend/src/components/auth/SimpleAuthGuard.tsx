@@ -1,5 +1,5 @@
 import React, { ReactNode, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { Box, CircularProgress, Typography } from '@mui/material'
 import { useAuth } from '../../contexts/AuthContext'
 
@@ -10,13 +10,14 @@ interface SimpleAuthGuardProps {
 export const SimpleAuthGuard: React.FC<SimpleAuthGuardProps> = ({ children }) => {
   const { isAuthenticated, loading, user } = useAuth()
   const navigate = useNavigate()
+  const location = useLocation()
 
   // Fix navigation loop by using useEffect
   useEffect(() => {
     if (!loading && (!isAuthenticated || !user)) {
-      navigate('/login', { replace: true })
+      navigate('/login', { replace: true, state: { from: location } })
     }
-  }, [isAuthenticated, loading, user, navigate])
+  }, [isAuthenticated, loading, user, navigate, location])
 
   // Show loading spinner while checking authentication
   if (loading) {
@@ -65,3 +66,4 @@ export const SimpleAuthGuard: React.FC<SimpleAuthGuardProps> = ({ children }) =>
 }
 
 export default SimpleAuthGuard
+

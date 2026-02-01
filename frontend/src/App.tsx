@@ -12,6 +12,7 @@ import { AuthProvider } from './contexts/AuthContext'
 import { ThemeContextProvider } from './contexts/ThemeContext'
 import { SimpleAuthGuard as AuthGuard } from './components/auth/SimpleAuthGuard'
 import { MainLayout } from './components/layout/MainLayout'
+import { useAuth } from './contexts/AuthContext'
 import './styles/globals.css'
 import './styles/index.css'
 
@@ -33,15 +34,7 @@ const PositionsPage = lazy(() => import('./components/organization/PositionsPage
 const SuperAdminUserCreation = lazy(() => import('./components/admin/SuperAdminUserCreation'))
 const BenefitsManagement = lazy(() => import('./components/benefits/BenefitsManagement'))
 const ProjectManagement = lazy(() => import('./components/projects/ProjectManagement'))
-const LoginPage = lazy(() => import('./components/auth/LoginPageSimple'))
 const UnifiedLoginPage = lazy(() => import('./components/auth/UnifiedLoginPage'))
-// const RoleBasedLoginSelector = lazy(() => import('./components/auth/RoleBasedLoginSelector'))
-const EmployeeLogin = lazy(() => import('./components/auth/EmployeeLogin'))
-const TeamLeaderLogin = lazy(() => import('./components/auth/TeamLeaderLogin'))
-const HRManagerLogin = lazy(() => import('./components/auth/HRManagerLogin'))
-const DepartmentManagerLogin = lazy(() => import('./components/auth/DepartmentManagerLogin'))
-const AdminLogin = lazy(() => import('./components/auth/AdminLogin'))
-const SuperAdminLogin = lazy(() => import('./components/auth/SuperAdminLogin'))
 const SettingsPage = lazy(() => import('./components/settings/SettingsPage'))
 import ReportsPage from './components/reports/ReportsPage'
 // const ReportsPage = lazy(() => import('./components/reports/ReportsPage'))
@@ -63,6 +56,8 @@ const AIInsights = lazy(() => import('./components/ai/AIInsights'))
 const AIAttendanceAnalyzer = lazy(() => import('./components/ai/AIAttendanceAnalyzer'))
 const AILeaveRecommendations = lazy(() => import('./components/ai/AILeaveRecommendations'))
 const HRChatbot = lazy(() => import('./components/ai/HRChatbot'))
+
+const PublicHomePage = lazy(() => import('./pages/HomePage'))
 
 // Simple loading fallback
 
@@ -106,18 +101,28 @@ function SimpleRoute({ children }: { children: React.ReactNode }) {
   )
 }
 
+function HomeRoute() {
+  const { isAuthenticated, loading } = useAuth()
+
+  if (loading) return null
+  if (isAuthenticated) return <Navigate to="/dashboard" replace />
+
+  return (
+    <SimpleRoute>
+      <PublicHomePage />
+    </SimpleRoute>
+  )
+}
+
 function AppRoutes() {
   return (
     <Routes>
+      {/* Public homepage */}
+      <Route path="/" element={<HomeRoute />} />
+
       {/* Role-based login routes */}
       <Route path="/login" element={<UnifiedLoginPage />} />
-      <Route path="/login/simple" element={<LoginPage />} />
-      <Route path="/login/employee" element={<EmployeeLogin />} />
-      <Route path="/login/team-leader" element={<TeamLeaderLogin />} />
-      <Route path="/login/hr-manager" element={<HRManagerLogin />} />
-      <Route path="/login/department-manager" element={<DepartmentManagerLogin />} />
-      <Route path="/login/admin" element={<AdminLogin />} />
-      <Route path="/login/super-admin" element={<SuperAdminLogin />} />
+      <Route path="/login/*" element={<Navigate to="/login" replace />} />
       <Route
         path="/*"
         element={
