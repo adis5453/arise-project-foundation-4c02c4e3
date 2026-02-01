@@ -24,7 +24,7 @@ import { toast } from 'sonner';
 export const UnifiedLoginPage = () => {
     const navigate = useNavigate();
     const theme = useTheme();
-    const { login, loading } = useAuth();
+    const { login, isLoading } = useAuth();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
     const [formData, setFormData] = useState({
@@ -39,12 +39,22 @@ export const UnifiedLoginPage = () => {
         e.preventDefault();
         setError('');
         try {
-            await login(formData);
-            toast.success('Login successful');
-            navigate('/dashboard');
+            const result = await login(formData);
+
+            if (result.success) {
+                toast.success('Login successful');
+                navigate('/dashboard');
+                return;
+            }
+
+            const message = result.error || 'Invalid email or password';
+            setError(message);
+            toast.error(message);
         } catch (err: any) {
             console.error(err);
-            setError(err.message || 'Login failed');
+            const message = err?.message || 'Login failed';
+            setError(message);
+            toast.error(message);
         }
     };
 
@@ -128,11 +138,11 @@ export const UnifiedLoginPage = () => {
                                     variant="contained"
                                     size="large"
                                     fullWidth
-                                    disabled={loading}
+                                    disabled={isLoading}
                                     startIcon={<Login />}
                                     sx={{ py: 1.5, fontSize: '1.1rem' }}
                                 >
-                                    {loading ? 'Signing In...' : 'Sign In'}
+                                    {isLoading ? 'Signing In...' : 'Sign In'}
                                 </Button>
                             </Stack>
                         </form>
