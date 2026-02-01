@@ -48,6 +48,20 @@ body.dark {
   --ring: 214 86% 57%;
 }
 
+/* Marquee used by glassmorphism-trust-hero */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 40s linear infinite;
+}
+
 /* CSS Variables for Denim HRM Theme */
 :root {
   --color-primary: #4997e8;
