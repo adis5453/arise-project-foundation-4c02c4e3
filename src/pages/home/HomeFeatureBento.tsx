@@ -36,31 +36,21 @@ const FEATURES = [
 
 export function HomeFeatureBento() {
   return (
-    <section id="features" className="relative overflow-hidden bg-foreground text-background">
-      {/* soft glow corners */}
+    <section id="features" className="relative overflow-hidden bg-background text-foreground">
+      {/* paper glow */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
-        <div className="absolute -left-24 -top-24 h-96 w-96 rounded-full bg-brand-primary/15 blur-3xl" />
+        <div className="absolute -left-24 -top-24 h-96 w-96 rounded-full bg-brand-primary/10 blur-3xl" />
         <div className="absolute -bottom-28 -right-28 h-[28rem] w-[28rem] rounded-full bg-brand-accent/10 blur-3xl" />
       </div>
 
-      {/* subtle gradient depth */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0"
-        style={{
-          backgroundImage:
-            "radial-gradient(900px 520px at 15% 0%, hsl(var(--ring) / 0.18) 0%, transparent 60%), radial-gradient(760px 520px at 90% 15%, hsl(var(--accent) / 0.14) 0%, transparent 60%)",
-        }}
-      />
-
-      <div className="mx-auto max-w-7xl px-6 pt-24 pb-44 lg:pb-52 2xl:max-w-[1400px] 2xl:px-10">
+      <div className="mx-auto max-w-7xl px-6 pt-20 pb-16 sm:pt-24 sm:pb-20 2xl:max-w-[1400px] 2xl:px-10">
         <div className="grid items-start gap-14 lg:grid-cols-[0.92fr_1.08fr] xl:grid-cols-[0.85fr_1.15fr]">
           <div>
-            <h2 className="max-w-[18ch] text-balance text-4xl font-semibold tracking-tight text-background sm:text-5xl">
-              Built for modern HR teams
+            <h2 className="max-w-[20ch] text-balance text-3xl font-semibold tracking-tight sm:text-5xl">
+              Everything HR teams need—without the noise
             </h2>
-            <p className="mt-4 max-w-md text-base text-background/75">
-              A premium, glass-forward UI with the modules you need—without the clutter.
+            <p className="mt-4 max-w-md text-base text-muted-foreground">
+              Clean surfaces, fast scanning, and workflows that adapt to roles—from employees to admins.
             </p>
           </div>
 
@@ -69,18 +59,18 @@ export function HomeFeatureBento() {
             {FEATURES.map(({ icon: Icon, title, desc, span }) => (
               <div
                 key={title}
-                className={`group rounded-3xl border border-background/10 bg-background/5 p-6 text-background shadow-denim-md backdrop-blur transition hover:bg-background/8 hover:shadow-denim-hover ${span}`}
+                className={`group rounded-3xl border border-border/15 bg-card/60 p-6 text-foreground shadow-denim-sm backdrop-blur transition hover:bg-card/75 hover:shadow-denim-hover ${span}`}
               >
                 <div className="flex items-center gap-3">
                   <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-brand-secondary text-brand-secondary-foreground shadow-denim-sm">
                     <Icon className="h-5 w-5" />
                   </span>
-                  <h3 className="font-semibold tracking-tight text-background">{title}</h3>
+                  <h3 className="font-semibold tracking-tight">{title}</h3>
                 </div>
-                <p className="mt-3 text-sm text-background/75">{desc}</p>
-                <div className="mt-5 h-px w-full bg-background/10" />
-                <p className="mt-4 text-xs text-background/65">
-                  Designed to feel fast: clear hierarchy, bento layouts, and role-aware navigation.
+                <p className="mt-3 text-sm text-muted-foreground">{desc}</p>
+                <div className="mt-5 h-px w-full bg-border/30" />
+                <p className="mt-4 text-xs text-muted-foreground">
+                  Built for speed: clear hierarchy, bento scanning, and guardrails by role.
                 </p>
               </div>
             ))}
