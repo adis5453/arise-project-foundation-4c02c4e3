@@ -23,7 +23,7 @@ export function HomeModules() {
               {MODULES.map(({ icon: Icon, label }) => (
                 <div
                   key={label}
-                  className="flex items-center gap-3 rounded-2xl border border-border/25 bg-background/55 px-4 py-3 shadow-denim-sm backdrop-blur"
+                  className="flex items-center gap-3 rounded-2xl border border-border/15 bg-background/55 px-4 py-3 shadow-denim-sm backdrop-blur"
                 >
                   <Icon className="h-4 w-4 text-brand-accent" />
                   <span className="text-sm font-medium">{label}</span>
@@ -34,15 +34,15 @@ export function HomeModules() {
 
           {/* A simple glass “stack” block to keep the 21st feel without external assets */}
           <div className="grid gap-4">
-            <div className="rounded-3xl border border-border/25 bg-background/55 p-6 shadow-denim-sm backdrop-blur">
+            <div className="rounded-3xl border border-border/15 bg-background/55 p-6 shadow-denim-sm backdrop-blur">
               <h3 className="text-base font-semibold tracking-tight">Role-aware dashboards</h3>
               <p className="mt-2 text-sm text-muted-foreground">Each role gets the right tools—no noise.</p>
             </div>
-            <div className="rounded-3xl border border-border/25 bg-background/55 p-6 shadow-denim-sm backdrop-blur">
+            <div className="rounded-3xl border border-border/15 bg-background/55 p-6 shadow-denim-sm backdrop-blur">
               <h3 className="text-base font-semibold tracking-tight">Built-in workflows</h3>
               <p className="mt-2 text-sm text-muted-foreground">Approvals, audits, and balances are first-class.</p>
             </div>
-            <div className="rounded-3xl border border-border/25 bg-background/55 p-6 shadow-denim-sm backdrop-blur">
+            <div className="rounded-3xl border border-border/15 bg-background/55 p-6 shadow-denim-sm backdrop-blur">
               <h3 className="text-base font-semibold tracking-tight">Fast navigation</h3>
               <p className="mt-2 text-sm text-muted-foreground">Bento-grid patterns for quick scanning and action.</p>
             </div>
