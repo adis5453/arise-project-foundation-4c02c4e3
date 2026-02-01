@@ -1,5 +1,5 @@
-import React, { useState, useCallback } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect, useState, useCallback } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import {
   Box, Card, CardContent, TextField, Button, Typography, InputAdornment,
   IconButton, FormControlLabel, Checkbox, Alert, Container
@@ -18,7 +18,14 @@ interface LoginFormData {
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate()
-  const { login, isLoading } = useAuth()
+  const location = useLocation()
+  const { login, isLoading, isAuthenticated } = useAuth()
+  const fromPath = (location.state as any)?.from?.pathname as string | undefined
+
+  useEffect(() => {
+    if (!isAuthenticated) return
+    navigate(fromPath || '/dashboard', { replace: true })
+  }, [fromPath, isAuthenticated, navigate])
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [formData, setFormData] = useState<LoginFormData>({
@@ -48,7 +55,7 @@ const LoginPage: React.FC = () => {
       const result = await login({ email: formData.email, password: formData.password })
       if (result.success) {
         toast.success('Login successful!')
-        navigate('/dashboard')
+        navigate(fromPath || result.redirectTo || '/dashboard', { replace: true })
       } else {
         throw new Error(result.error || 'Login failed')
       }

@@ -1,6 +1,5 @@
 import React, { ReactNode, useEffect, forwardRef } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { Box, CircularProgress, Typography } from '@mui/material'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 
 interface SimpleAuthGuardProps {
@@ -10,56 +9,24 @@ interface SimpleAuthGuardProps {
 export const SimpleAuthGuard = forwardRef<HTMLDivElement, SimpleAuthGuardProps>(({ children }, ref) => {
   const { isAuthenticated, loading, user } = useAuth()
   const navigate = useNavigate()
+  const location = useLocation()
 
   // Fix navigation loop by using useEffect
   useEffect(() => {
     if (!loading && (!isAuthenticated || !user)) {
-      navigate('/login', { replace: true })
+      // Preserve the originally requested URL so login can send the user back.
+      navigate('/login', { replace: true, state: { from: location } })
     }
-  }, [isAuthenticated, loading, user, navigate])
+  }, [isAuthenticated, loading, user, navigate, location])
 
-  // Show loading spinner while checking authentication
+  // No global loading UI (per request). Render nothing while auth resolves.
   if (loading) {
-    return (
-      <Box
-        ref={ref}
-        sx={{
-          minHeight: '100vh',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: 2
-        }}
-      >
-        <CircularProgress size={40} />
-        <Typography variant="body1" color="text.secondary">
-          Authenticating...
-        </Typography>
-      </Box>
-    )
+    return <div ref={ref} />
   }
 
   // Don't render anything during redirect
   if (!isAuthenticated || !user) {
-    return (
-      <Box
-        ref={ref}
-        sx={{
-          minHeight: '100vh',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: 2
-        }}
-      >
-        <CircularProgress size={40} />
-        <Typography variant="body1" color="text.secondary">
-          Redirecting to login...
-        </Typography>
-      </Box>
-    )
+    return <div ref={ref} />
   }
 
   // ✅ FIXED: Render children if authenticated (profile fallback ensures profile exists)
