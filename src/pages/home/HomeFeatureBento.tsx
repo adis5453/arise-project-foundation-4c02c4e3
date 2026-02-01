@@ -36,34 +36,45 @@ const FEATURES = [
 
 export function HomeFeatureBento() {
   return (
-    <section id="features" className="mx-auto max-w-6xl px-6 py-20">
-      <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
-        <div>
-          <h2 className="text-3xl font-semibold tracking-tight">Built for modern HR teams</h2>
-          <p className="mt-3 text-muted-foreground">
-            A premium, glass-forward UI with the modules you need—without the clutter.
-          </p>
-        </div>
+    <section id="features" className="relative overflow-hidden bg-foreground text-background">
+      {/* soft glow corners */}
+      <div aria-hidden className="pointer-events-none absolute inset-0">
+        <div className="absolute -left-24 -top-24 h-96 w-96 rounded-full bg-brand-primary/15 blur-3xl" />
+        <div className="absolute -bottom-28 -right-28 h-[28rem] w-[28rem] rounded-full bg-brand-accent/10 blur-3xl" />
+      </div>
 
-        {/* 21st.dev-inspired bento grid */}
-        <div className="grid gap-4 sm:grid-cols-3">
-          {FEATURES.map(({ icon: Icon, title, desc, span }) => (
-            <div
-              key={title}
-              className={`group rounded-3xl border border-border bg-card/70 p-6 shadow-denim-sm backdrop-blur transition hover:shadow-denim-hover ${span}`}
-            >
-              <div className="flex items-center gap-3">
-                <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-brand-secondary text-brand-secondary-foreground">
-                  <Icon className="h-5 w-5" />
-                </span>
-                <h3 className="font-semibold tracking-tight">{title}</h3>
+      <div className="mx-auto max-w-6xl px-6 py-28">
+        <div className="grid items-start gap-14 lg:grid-cols-[0.92fr_1.08fr]">
+          <div>
+            <h2 className="text-4xl font-semibold tracking-tight text-background sm:text-5xl">
+              Built for modern HR teams
+            </h2>
+            <p className="mt-4 max-w-md text-base text-background/75">
+              A premium, glass-forward UI with the modules you need—without the clutter.
+            </p>
+          </div>
+
+          {/* 21st.dev-inspired bento grid */}
+          <div className="grid gap-4 sm:grid-cols-3 lg:translate-y-16 lg:translate-x-6">
+            {FEATURES.map(({ icon: Icon, title, desc, span }) => (
+              <div
+                key={title}
+                className={`group rounded-3xl border border-border bg-background/80 p-6 text-foreground shadow-denim-sm backdrop-blur transition hover:bg-background/90 hover:shadow-denim-hover ${span}`}
+              >
+                <div className="flex items-center gap-3">
+                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-brand-secondary text-brand-secondary-foreground">
+                    <Icon className="h-5 w-5" />
+                  </span>
+                  <h3 className="font-semibold tracking-tight">{title}</h3>
+                </div>
+                <p className="mt-3 text-sm text-muted-foreground">{desc}</p>
+                <div className="mt-5 h-px w-full bg-border/60" />
+                <p className="mt-4 text-xs text-muted-foreground">
+                  Designed to feel fast: clear hierarchy, bento layouts, and role-aware navigation.
+                </p>
               </div>
-              <p className="mt-3 text-sm text-muted-foreground">{desc}</p>
-              <p className="mt-4 text-xs text-muted-foreground">
-                Role-aware navigation with guarded modules and approvals.
-              </p>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </section>
