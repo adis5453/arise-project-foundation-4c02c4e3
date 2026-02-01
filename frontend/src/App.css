@@ -9,42 +9,27 @@
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-  background-color: #f8fafc;
-  color: #1f2937;
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
   line-height: 1.6;
 }
 
 /* Utility Classes for Arise HRM */
 .bg-white-alpha-10 {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: hsl(var(--card) / 0.1);
 }
 
 .bg-white-alpha-20 {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: hsl(var(--card) / 0.2);
 }
 
 .text-white {
-  color: white;
+  color: hsl(var(--foreground));
 }
 
-/* Material-UI Custom Overrides for HRM */
-.MuiCard-root {
-  border-radius: 16px !important;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08) !important;
-  transition: all 0.2s ease-in-out !important;
-}
-
-.MuiCard-root:hover {
-  box-shadow: 0 8px 25px rgba(0,0,0,0.12) !important;
-  transform: translateY(-2px) !important;
-}
-
-.MuiButton-root {
-  border-radius: 12px !important;
-  text-transform: none !important;
-  font-weight: 600 !important;
-  font-family: 'Inter' !important;
-}
+/* NOTE: Prefer theme-level overrides in styles/denimTheme.ts over global CSS overrides.
+   Keep this file minimal to avoid fighting the MUI theme.
+*/
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
@@ -52,16 +37,16 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: hsl(var(--muted));
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: hsl(var(--accent) / 0.35);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  background: hsl(var(--accent) / 0.55);
 }
 
 /* Animation Classes */
@@ -103,11 +88,11 @@ body {
 
 /* Dashboard specific styles */
 .dashboard-gradient {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, hsl(var(--accent)) 0%, hsl(var(--primary)) 100%);
 }
 
 .glassmorphism {
-  background: rgba(255, 255, 255, 0.1);
+  background: hsl(var(--card) / 0.12);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid hsl(var(--border) / 0.18);
 }

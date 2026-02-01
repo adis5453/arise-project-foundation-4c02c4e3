@@ -15,7 +15,8 @@ import {
     useTheme,
     Checkbox,
     FormControlLabel,
-    useMediaQuery
+    useMediaQuery,
+    alpha
 } from '@mui/material';
 import { Visibility, VisibilityOff, Email, Lock, Login } from '@mui/icons-material';
 import { useAuth } from '../../contexts/AuthContext';
@@ -55,20 +56,49 @@ export const UnifiedLoginPage = () => {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                bgcolor: 'background.default',
-                p: 2
+                p: 2,
+                background: `radial-gradient(900px 520px at 10% 0%, ${alpha(theme.palette.primary.main, 0.18)} 0%, transparent 60%),
+                            radial-gradient(760px 520px at 90% 10%, ${alpha(theme.palette.secondary.main, 0.14)} 0%, transparent 55%),
+                            linear-gradient(180deg, ${alpha(theme.palette.background.default, 1)} 0%, ${alpha(theme.palette.background.default, 1)} 100%)`,
             }}
         >
             <Container maxWidth="sm">
-                <Card elevation={8} sx={{ borderRadius: 4, overflow: 'hidden' }}>
-                    <Box sx={{
-                        bgcolor: 'primary.main',
-                        p: 4,
-                        textAlign: 'center',
-                        color: 'primary.contrastText'
-                    }}>
-                        <Typography variant="h4" fontWeight="bold">Arise HRM</Typography>
-                        <Typography variant="subtitle1">Unified Access Portal</Typography>
+                <Card
+                    elevation={0}
+                    sx={{
+                        borderRadius: 4,
+                        overflow: 'hidden',
+                        backgroundColor: alpha(theme.palette.background.paper, 0.70),
+                        backdropFilter: 'blur(22px)',
+                        border: `1px solid ${alpha(theme.palette.divider, 0.35)}`,
+                        boxShadow: theme.shadows[10],
+                    }}
+                >
+                    <Box
+                        sx={{
+                            p: isMobile ? 3 : 4,
+                            textAlign: 'center',
+                            position: 'relative',
+                            borderBottom: `1px solid ${alpha(theme.palette.divider, 0.35)}`,
+                            background: `radial-gradient(640px 260px at 30% 0%, ${alpha(theme.palette.primary.main, 0.20)} 0%, transparent 60%),
+                                         radial-gradient(520px 260px at 80% 40%, ${alpha(theme.palette.secondary.main, 0.14)} 0%, transparent 55%)`,
+                        }}
+                    >
+                        <Typography
+                            variant="h4"
+                            fontWeight={800}
+                            sx={{
+                                letterSpacing: -0.5,
+                                background: `linear-gradient(135deg, ${theme.palette.text.primary} 0%, ${alpha(theme.palette.text.primary, 0.70)} 100%)`,
+                                WebkitBackgroundClip: 'text',
+                                WebkitTextFillColor: 'transparent',
+                            }}
+                        >
+                            Arise HRM
+                        </Typography>
+                        <Typography variant="subtitle2" sx={{ color: alpha(theme.palette.text.secondary, 0.9), mt: 0.5 }}>
+                            Unified Access Portal
+                        </Typography>
                     </Box>
 
                     <CardContent sx={{ p: isMobile ? 3 : 5 }}>
