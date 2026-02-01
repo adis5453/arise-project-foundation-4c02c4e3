@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import IsoLevelWarp from "@/components/ui/isometric-wave-grid-background";
-import HeroDemo from "@/components/ui/isometric-wave-grid-background.demo";
+import { HomeProductPreview } from "@/pages/home/HomeProductPreview";
 
 const HIGHLIGHTS = [
   "Role-based routing & approvals",
@@ -59,15 +59,7 @@ export function HomeHero() {
             </ul>
           </div>
 
-          {/* 21st-style: device-ish shell with a glass interior */}
-          <div className="relative">
-            <div className="absolute -inset-4 rounded-[2.5rem] bg-gradient-to-b from-white/10 to-transparent blur-2xl" />
-            <div className="relative rounded-[2.5rem] border border-border bg-card/50 p-3 shadow-denim-lg backdrop-blur">
-              <div className="rounded-[2.2rem] border border-border bg-background/40 p-3">
-                <HeroDemo />
-              </div>
-            </div>
-          </div>
+          <HomeProductPreview />
         </div>
       </div>
     </section>
