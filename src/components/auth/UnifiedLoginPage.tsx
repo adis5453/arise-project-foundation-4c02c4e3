@@ -28,8 +28,8 @@ export const UnifiedLoginPage = () => {
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
     const [formData, setFormData] = useState({
-        email: 'admin@arisehrm.com',
-        password: 'password123',
+        email: '',
+        password: '',
         rememberMe: false
     });
     const [showPassword, setShowPassword] = useState(false);
@@ -43,7 +43,7 @@ export const UnifiedLoginPage = () => {
 
             if (result.success) {
                 toast.success('Login successful');
-                navigate('/dashboard');
+                navigate(result.redirectTo || '/dashboard');
                 return;
             }
 
@@ -144,6 +144,16 @@ export const UnifiedLoginPage = () => {
                                 >
                                     {isLoading ? 'Signing In...' : 'Sign In'}
                                 </Button>
+
+                                <Box sx={{ textAlign: 'center', mt: 1 }}>
+                                    <Button
+                                        variant="text"
+                                        size="small"
+                                        onClick={() => toast.info('Password reset flow can be added next (email-based).')}
+                                    >
+                                        Forgot password?
+                                    </Button>
+                                </Box>
                             </Stack>
                         </form>
                     </CardContent>

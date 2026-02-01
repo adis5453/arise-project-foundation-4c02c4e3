@@ -1,7 +1,6 @@
 import React from 'react'
 import { Box, Grid, Card, CardContent, Typography, Avatar, Chip, LinearProgress } from '@mui/material'
 import { useAuth } from '../../contexts/AuthContext'
-import { usePermissions } from '../../hooks/usePermissions'
 import { useQuery } from '@tanstack/react-query'
 import api from '../../lib/api'
 import {
@@ -325,24 +324,13 @@ const HRDashboard: React.FC = () => {
 
 const RoleBasedDashboard: React.FC = () => {
   const { profile } = useAuth()
-  const { isHR, isManager, getRoleName } = usePermissions()
+  const roleName = profile?.role?.name || 'employee'
 
   // Replace the render logic
   const renderDashboard = () => {
-    // If you want to force Employee View for testing, uncomment:
+    // For now we show the context-aware dashboard for all roles.
+    // (HR/Manager variants can be re-enabled once their data sources are fully live.)
     return <NewEmployeeDashboard />
-
-    // FORCE VISIBLE for Review (Use function calls isHR() / isManager() when restoring)
-    /*
-    if (isHR()) {
-      return <HRDashboard />
-    } else if (isManager()) {
-      return <ManagerDashboard />
-    } else {
-      // Use the new Context-Aware Dashboard
-      return <NewEmployeeDashboard />
-    }
-    */
   }
 
   return (
@@ -356,7 +344,7 @@ const RoleBasedDashboard: React.FC = () => {
             Welcome back, {profile?.first_name}!
           </Typography>
           <Typography variant="subtitle1" color="text.secondary" sx={{ textTransform: 'capitalize' }}>
-            {getRoleName()} Dashboard
+            {(profile?.role?.displayName || roleName)} Dashboard
           </Typography>
         </Box>
       </Box>

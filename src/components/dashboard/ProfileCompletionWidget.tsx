@@ -9,6 +9,8 @@ import {
     Chip,
     Stack,
     Grid,
+    useTheme,
+    alpha,
 } from '@mui/material';
 import {
     Warning,
@@ -34,6 +36,7 @@ interface CompletionApiResponse {
 const ProfileCompletionWidget: React.FC = () => {
     const { user } = useAuth();
     const navigate = useNavigate();
+    const theme = useTheme();
 
     const { data, isLoading, error } = useQuery<CompletionApiResponse>({
         queryKey: ['profile-completion', user?.id],
@@ -80,14 +83,15 @@ const ProfileCompletionWidget: React.FC = () => {
     return (
         <Card sx={{
             mb: 3,
-            background: 'linear-gradient(to right, #fff3e0, #ffffff)',
-            borderLeft: '6px solid #ed6c02'
+            borderRadius: 4,
+            background: `linear-gradient(135deg, ${alpha(theme.palette.warning.main, 0.10)} 0%, ${alpha(theme.palette.background.paper, 0.92)} 60%, ${alpha(theme.palette.background.paper, 1)} 100%)`,
+            border: `1px solid ${alpha(theme.palette.warning.main, 0.18)}`
         }}>
             <CardContent>
                 <Grid container spacing={2} alignItems="center">
                     <Grid size={{ xs: 12, md: 4 }}>
                         <Typography variant="h6" gutterBottom fontWeight="bold" color="warning.dark">
-                            ⚠️ Profile Incomplete ({data.completion_percentage}%)
+                            Profile Incomplete ({data.completion_percentage}%)
                         </Typography>
                         <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
                             <Box sx={{ width: '100%', mr: 1 }}>

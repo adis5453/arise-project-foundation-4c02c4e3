@@ -11,7 +11,7 @@ interface AuthContextType {
   isLoading: boolean; // Alias for compatibility
   securityContext: any | null; // Placeholder for security context
   sessionHealth: 'healthy' | 'critical' | 'warning'; // Placeholder
-  login: (credentials: any) => Promise<{ success: boolean; mfaRequired?: boolean; error?: string }>;
+  login: (credentials: any) => Promise<{ success: boolean; redirectTo?: string; mfaRequired?: boolean; error?: string }>;
   logout: () => Promise<void>;
   isAuthenticated: boolean;
 }
@@ -21,6 +21,13 @@ export const AuthContext = createContext<AuthContextType>({} as AuthContextType)
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+
+  const getPostLoginRoute = (roleName?: string) => {
+    const role = String(roleName || 'employee')
+    if (['super_admin', 'hr_manager', 'hr_staff'].includes(role)) return '/dashboard'
+    if (['team_lead'].includes(role)) return '/team-leader'
+    return '/dashboard'
+  }
 
   const buildUserFromSession = async (session: Session): Promise<User> => {
     const authUser = session.user
@@ -35,6 +42,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       supabase.from('profiles').select('*').eq('id', authUser.id).maybeSingle(),
       supabase.from('user_roles').select('role').eq('user_id', authUser.id),
     ])
+
+    // Active-user enforcement (profile can be deactivated by HR)
+    if (profileRow?.is_active === false) {
+      await supabase.auth.signOut()
+      throw new Error('Your account is inactive. Please contact HR.')
+    }
 
     const role = (roleRows?.[0]?.role ?? 'employee') as UserRole
 
@@ -125,7 +138,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
       const u = await buildUserFromSession(data.session)
       setUser(u)
-      return { success: true }
+      return { success: true, redirectTo: getPostLoginRoute(u.role) }
     } catch (error: any) {
       return { success: false, error: error.message };
     }
