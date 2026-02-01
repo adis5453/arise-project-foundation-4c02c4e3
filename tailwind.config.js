@@ -16,8 +16,9 @@ export default {
         'popover-foreground': 'hsl(var(--popover-foreground))',
         muted: 'hsl(var(--muted))',
         'muted-foreground': 'hsl(var(--muted-foreground))',
-        border: 'hsl(var(--border) / 0.18)',
-        input: 'hsl(var(--input) / 0.18)',
+        /* Keep tokens un-alpha’d; components can control opacity via /xx utilities. */
+        border: 'hsl(var(--border))',
+        input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
         brand: {
           primary: 'hsl(var(--primary))',
