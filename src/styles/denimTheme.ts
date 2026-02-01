@@ -1,96 +1,118 @@
-import { ThemeOptions, PaletteColorOptions } from '@mui/material/styles';
-import { alpha } from '@mui/material/styles';
+import { ThemeOptions } from '@mui/material/styles'
+import { alpha } from '@mui/material/styles'
 
-// Denim Color Palette
-export const denimColors = {
-  50: '#f0f8fe',   // Lightest - backgrounds
-  100: '#deedfb',  // Very light - hover states
-  200: '#c4e2f9',  // Light - borders, dividers
-  300: '#9bcff5',  // Light accent - chips, badges
-  400: '#6bb5ef',  // Medium light - secondary buttons
-  500: '#4997e8',  // Medium - primary color
-  600: '#347bdc',  // Medium dark - primary hover
-  700: '#2962c2',  // Dark - primary pressed
-  800: '#2954a4',  // Darker - headings
-  900: '#264882',  // Darkest - text
-  950: '#1b2d50',  // Ultra dark - dark theme backgrounds
-} as const;
+/**
+ * NOTE: The file name is kept for backwards compatibility.
+ * This theme now follows the orange/blue + warm-paper token system used in styles/index.css.
+ */
+
+export const brandColors = {
+  primary: {
+    50: '#fff3ec',
+    100: '#ffe1d1',
+    200: '#ffc2a3',
+    300: '#ffa574',
+    400: '#ff7c3c',
+    500: '#ff5600',
+    600: '#e64d00',
+    700: '#cc4400',
+    800: '#a33600',
+    900: '#7a2900',
+    950: '#4d1900',
+  },
+  accent: {
+    50: '#eef0ff',
+    100: '#d6d9ff',
+    200: '#b0b6ff',
+    300: '#8a93ff',
+    400: '#4d59ff',
+    500: '#000ce1',
+    600: '#000bbf',
+    700: '#00099d',
+    800: '#00077a',
+    900: '#000558',
+    950: '#000334',
+  },
+} as const
+
+// Back-compat export name (previously the denim blue palette)
+export const denimColors = brandColors.accent
 
 // Semantic color mapping
 export const semanticColors = {
-  primary: denimColors[500],
-  primaryLight: denimColors[300],
-  primaryDark: denimColors[700],
+  primary: brandColors.primary[500],
+  primaryLight: brandColors.primary[300],
+  primaryDark: brandColors.primary[700],
   primaryContrast: '#ffffff',
 
-  secondary: denimColors[400],
-  secondaryLight: denimColors[200],
-  secondaryDark: denimColors[600],
+  secondary: brandColors.accent[500],
+  secondaryLight: brandColors.accent[300],
+  secondaryDark: brandColors.accent[700],
   secondaryContrast: '#ffffff',
 
   background: {
-    light: denimColors[50],
+    light: '#f4f3ec',
     main: '#ffffff',
-    dark: denimColors[950],
+    dark: '#17100e',
     paper: '#ffffff',
-    paperDark: denimColors[900],
+    paperDark: '#080e1c',
   },
 
   text: {
-    primary: denimColors[900],
-    secondary: denimColors[700],
-    disabled: denimColors[400],
-    primaryDark: denimColors[100],
-    secondaryDark: denimColors[300],
+    primary: '#17100e',
+    secondary: '#6a6462',
+    disabled: '#a9a3a1',
+    primaryDark: '#f4f3ec',
+    secondaryDark: '#dddbe0',
   },
 
-  divider: denimColors[200],
-  dividerDark: denimColors[800],
+  divider: alpha('#17100e', 0.12),
+  dividerDark: alpha('#ffffff', 0.18),
 
   success: '#10b981',
   warning: '#f59e0b',
   error: '#ef4444',
-  info: denimColors[400],
-} as const;
+  info: brandColors.accent[500],
+} as const
 
 // Gradient definitions
 export const denimGradients = {
-  primary: `linear-gradient(135deg, ${denimColors[500]} 0%, ${denimColors[600]} 100%)`,
-  light: `linear-gradient(135deg, ${denimColors[200]} 0%, ${denimColors[300]} 100%)`,
-  dark: `linear-gradient(135deg, ${denimColors[700]} 0%, ${denimColors[800]} 100%)`,
-  ultraDark: `linear-gradient(135deg, ${denimColors[900]} 0%, ${denimColors[950]} 100%)`,
+  primary: `linear-gradient(135deg, ${brandColors.primary[500]} 0%, ${brandColors.primary[600]} 100%)`,
+  light: `linear-gradient(135deg, ${brandColors.primary[200]} 0%, ${brandColors.primary[300]} 100%)`,
+  dark: `linear-gradient(135deg, ${brandColors.accent[600]} 0%, ${brandColors.accent[700]} 100%)`,
+  ultraDark: `linear-gradient(135deg, ${semanticColors.background.dark} 0%, ${semanticColors.background.paperDark} 100%)`,
 
   // Special gradients
-  hero: `linear-gradient(135deg, ${denimColors[600]} 0%, ${denimColors[700]} 50%, ${denimColors[800]} 100%)`,
-  card: `linear-gradient(145deg, ${alpha(denimColors[500], 0.05)} 0%, ${alpha(denimColors[600], 0.02)} 100%)`,
-  sidebar: `linear-gradient(180deg, ${denimColors[600]} 0%, ${denimColors[700]} 50%, ${denimColors[800]} 100%)`,
-  button: `linear-gradient(45deg, ${denimColors[500]} 30%, ${denimColors[600]} 90%)`,
+  hero: `linear-gradient(135deg, ${brandColors.accent[500]} 0%, ${brandColors.accent[600]} 45%, ${brandColors.primary[500]} 100%)`,
+  card: `linear-gradient(145deg, ${alpha(semanticColors.primary, 0.05)} 0%, ${alpha(semanticColors.secondary, 0.02)} 100%)`,
+  sidebar: `linear-gradient(180deg, ${brandColors.accent[600]} 0%, ${brandColors.accent[700]} 50%, ${semanticColors.background.paperDark} 100%)`,
+  button: `linear-gradient(45deg, ${brandColors.primary[500]} 30%, ${brandColors.primary[600]} 90%)`,
 
   // Role-specific gradients
-  employee: `linear-gradient(135deg, ${denimColors[400]} 0%, ${denimColors[500]} 100%)`,
-  teamLead: `linear-gradient(135deg, ${denimColors[500]} 0%, ${denimColors[600]} 100%)`,
-  manager: `linear-gradient(135deg, ${denimColors[600]} 0%, ${denimColors[700]} 100%)`,
-  hr: `linear-gradient(135deg, ${denimColors[700]} 0%, ${denimColors[800]} 100%)`,
-  admin: `linear-gradient(135deg, ${denimColors[800]} 0%, ${denimColors[900]} 100%)`,
-  superAdmin: `linear-gradient(135deg, ${denimColors[900]} 0%, ${denimColors[950]} 100%)`,
-} as const;
+  employee: `linear-gradient(135deg, ${brandColors.accent[300]} 0%, ${brandColors.accent[500]} 100%)`,
+  teamLead: `linear-gradient(135deg, ${brandColors.accent[500]} 0%, ${brandColors.accent[600]} 100%)`,
+  manager: `linear-gradient(135deg, ${brandColors.accent[600]} 0%, ${brandColors.accent[700]} 100%)`,
+  hr: `linear-gradient(135deg, ${brandColors.accent[700]} 0%, ${brandColors.accent[800]} 100%)`,
+  admin: `linear-gradient(135deg, ${brandColors.accent[800]} 0%, ${brandColors.accent[900]} 100%)`,
+  superAdmin: `linear-gradient(135deg, ${brandColors.accent[900]} 0%, ${brandColors.accent[950]} 100%)`,
+} as const
 
 // Box shadows with denim colors
 export const denimShadows = {
-  small: `0 2px 8px ${alpha(denimColors[500], 0.15)}`,
-  medium: `0 4px 16px ${alpha(denimColors[500], 0.2)}`,
-  large: `0 8px 32px ${alpha(denimColors[500], 0.25)}`,
-  xlarge: `0 12px 48px ${alpha(denimColors[500], 0.3)}`,
+  small: `0 2px 8px ${alpha('#000000', 0.10)}`,
+  medium: `0 4px 16px ${alpha('#000000', 0.14)}`,
+  large: `0 8px 32px ${alpha('#000000', 0.18)}`,
+  xlarge: `0 12px 48px ${alpha('#000000', 0.22)}`,
 
   // Interactive shadows
-  hover: `0 6px 20px ${alpha(denimColors[500], 0.25)}`,
-  active: `0 2px 8px ${alpha(denimColors[500], 0.3)}`,
+  hover: `0 10px 40px ${alpha('#000000', 0.22)}`,
+  active: `0 4px 16px ${alpha('#000000', 0.18)}`,
 
   // Role-specific shadows
-  employee: `0 4px 16px ${alpha(denimColors[400], 0.2)}`,
-  manager: `0 4px 16px ${alpha(denimColors[600], 0.2)}`,
-  admin: `0 4px 16px ${alpha(denimColors[800], 0.2)}`,
-} as const;
+  employee: `0 4px 16px ${alpha(brandColors.accent[400], 0.18)}`,
+  manager: `0 4px 16px ${alpha(brandColors.accent[600], 0.18)}`,
+  admin: `0 4px 16px ${alpha(brandColors.accent[800], 0.18)}`,
+} as const
 
 // Status color mapping with denim integration
 export const statusColors = {
@@ -113,69 +135,69 @@ export const statusColors = {
     contrastText: '#ffffff',
   },
   info: {
-    main: denimColors[400],
-    light: denimColors[300],
-    dark: denimColors[500],
+    main: brandColors.accent[500],
+    light: brandColors.accent[300],
+    dark: brandColors.accent[700],
     contrastText: '#ffffff',
   },
-} as const;
+} as const
 
 // Create MUI theme options with denim colors
 export const createDenimThemeOptions = (isDark: boolean): ThemeOptions => ({
   palette: {
     mode: isDark ? 'dark' : 'light',
     primary: {
-      50: denimColors[50],
-      100: denimColors[100],
-      200: denimColors[200],
-      300: denimColors[300],
-      400: denimColors[400],
-      500: denimColors[500],
-      600: denimColors[600],
-      700: denimColors[700],
-      800: denimColors[800],
-      900: denimColors[900],
-      main: denimColors[500],
-      light: denimColors[300],
-      dark: denimColors[700],
-      contrastText: '#ffffff',
+      50: brandColors.primary[50],
+      100: brandColors.primary[100],
+      200: brandColors.primary[200],
+      300: brandColors.primary[300],
+      400: brandColors.primary[400],
+      500: brandColors.primary[500],
+      600: brandColors.primary[600],
+      700: brandColors.primary[700],
+      800: brandColors.primary[800],
+      900: brandColors.primary[900],
+      main: brandColors.primary[500],
+      light: brandColors.primary[300],
+      dark: brandColors.primary[700],
+      contrastText: semanticColors.primaryContrast,
     },
     secondary: {
-      50: denimColors[100],
-      100: denimColors[200],
-      200: denimColors[300],
-      300: denimColors[400],
-      400: denimColors[500],
-      500: denimColors[400],
-      600: denimColors[500],
-      700: denimColors[600],
-      800: denimColors[700],
-      900: denimColors[800],
-      main: denimColors[400],
-      light: denimColors[200],
-      dark: denimColors[600],
-      contrastText: '#ffffff',
+      50: brandColors.accent[50],
+      100: brandColors.accent[100],
+      200: brandColors.accent[200],
+      300: brandColors.accent[300],
+      400: brandColors.accent[400],
+      500: brandColors.accent[500],
+      600: brandColors.accent[600],
+      700: brandColors.accent[700],
+      800: brandColors.accent[800],
+      900: brandColors.accent[900],
+      main: brandColors.accent[500],
+      light: brandColors.accent[300],
+      dark: brandColors.accent[700],
+      contrastText: semanticColors.secondaryContrast,
     },
     success: statusColors.success,
     warning: statusColors.warning,
     error: statusColors.error,
     info: statusColors.info,
     background: {
-      default: isDark ? denimColors[950] : denimColors[50],
-      paper: isDark ? denimColors[900] : '#ffffff',
+      default: isDark ? semanticColors.background.dark : semanticColors.background.light,
+      paper: isDark ? semanticColors.background.paperDark : semanticColors.background.paper,
     },
     text: {
-      primary: isDark ? denimColors[100] : denimColors[900],
-      secondary: isDark ? denimColors[300] : denimColors[700],
-      disabled: isDark ? denimColors[500] : denimColors[400],
+      primary: isDark ? semanticColors.text.primaryDark : semanticColors.text.primary,
+      secondary: isDark ? semanticColors.text.secondaryDark : semanticColors.text.secondary,
+      disabled: isDark ? alpha(semanticColors.text.primaryDark, 0.45) : alpha(semanticColors.text.primary, 0.45),
     },
-    divider: isDark ? denimColors[800] : denimColors[200],
+    divider: isDark ? semanticColors.dividerDark : semanticColors.divider,
     action: {
-      active: isDark ? denimColors[300] : denimColors[700],
-      hover: isDark ? alpha(denimColors[300], 0.08) : alpha(denimColors[500], 0.04),
-      selected: isDark ? alpha(denimColors[300], 0.16) : alpha(denimColors[500], 0.08),
-      disabled: isDark ? alpha(denimColors[500], 0.3) : alpha(denimColors[400], 0.3),
-      disabledBackground: isDark ? alpha(denimColors[500], 0.12) : alpha(denimColors[400], 0.12),
+      active: isDark ? brandColors.accent[200] : brandColors.accent[700],
+      hover: isDark ? alpha('#ffffff', 0.06) : alpha('#17100e', 0.04),
+      selected: isDark ? alpha('#ffffff', 0.10) : alpha('#17100e', 0.08),
+      disabled: isDark ? alpha('#ffffff', 0.30) : alpha('#17100e', 0.30),
+      disabledBackground: isDark ? alpha('#ffffff', 0.08) : alpha('#17100e', 0.06),
     },
   },
   shape: {
@@ -191,48 +213,48 @@ export const createDenimThemeOptions = (isDark: boolean): ThemeOptions => ({
     denimShadows.large,
     denimShadows.xlarge,
     denimShadows.xlarge,
-    `0 16px 64px ${alpha(denimColors[500], 0.35)}`,
-    `0 20px 80px ${alpha(denimColors[500], 0.4)}`,
-    `0 24px 96px ${alpha(denimColors[500], 0.45)}`,
-    `0 28px 112px ${alpha(denimColors[500], 0.5)}`,
-    `0 32px 128px ${alpha(denimColors[500], 0.55)}`,
-    `0 36px 144px ${alpha(denimColors[500], 0.6)}`,
-    `0 40px 160px ${alpha(denimColors[500], 0.65)}`,
-    `0 44px 176px ${alpha(denimColors[500], 0.7)}`,
-    `0 48px 192px ${alpha(denimColors[500], 0.75)}`,
-    `0 52px 208px ${alpha(denimColors[500], 0.8)}`,
-    `0 56px 224px ${alpha(denimColors[500], 0.85)}`,
-    `0 60px 240px ${alpha(denimColors[500], 0.9)}`,
-    `0 64px 256px ${alpha(denimColors[500], 0.95)}`,
-    `0 68px 272px ${alpha(denimColors[500], 1)}`,
-    `0 72px 288px ${alpha(denimColors[500], 1)}`,
-    `0 76px 304px ${alpha(denimColors[500], 1)}`,
+    `0 16px 64px ${alpha('#000000', 0.20)}`,
+    `0 20px 80px ${alpha('#000000', 0.22)}`,
+    `0 24px 96px ${alpha('#000000', 0.24)}`,
+    `0 28px 112px ${alpha('#000000', 0.26)}`,
+    `0 32px 128px ${alpha('#000000', 0.28)}`,
+    `0 36px 144px ${alpha('#000000', 0.30)}`,
+    `0 40px 160px ${alpha('#000000', 0.32)}`,
+    `0 44px 176px ${alpha('#000000', 0.34)}`,
+    `0 48px 192px ${alpha('#000000', 0.36)}`,
+    `0 52px 208px ${alpha('#000000', 0.38)}`,
+    `0 56px 224px ${alpha('#000000', 0.40)}`,
+    `0 60px 240px ${alpha('#000000', 0.42)}`,
+    `0 64px 256px ${alpha('#000000', 0.44)}`,
+    `0 68px 272px ${alpha('#000000', 0.46)}`,
+    `0 72px 288px ${alpha('#000000', 0.48)}`,
+    `0 76px 304px ${alpha('#000000', 0.50)}`,
   ],
   typography: {
     fontFamily: '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
     h1: {
       fontWeight: 700,
-      color: isDark ? denimColors[100] : denimColors[900],
+      color: isDark ? semanticColors.text.primaryDark : semanticColors.text.primary,
     },
     h2: {
       fontWeight: 700,
-      color: isDark ? denimColors[100] : denimColors[900],
+      color: isDark ? semanticColors.text.primaryDark : semanticColors.text.primary,
     },
     h3: {
       fontWeight: 600,
-      color: isDark ? denimColors[200] : denimColors[800],
+      color: isDark ? semanticColors.text.primaryDark : semanticColors.text.primary,
     },
     h4: {
       fontWeight: 600,
-      color: isDark ? denimColors[200] : denimColors[800],
+      color: isDark ? semanticColors.text.primaryDark : semanticColors.text.primary,
     },
     h5: {
       fontWeight: 600,
-      color: isDark ? denimColors[300] : denimColors[700],
+      color: isDark ? semanticColors.text.secondaryDark : semanticColors.text.secondary,
     },
     h6: {
       fontWeight: 600,
-      color: isDark ? denimColors[300] : denimColors[700],
+      color: isDark ? semanticColors.text.secondaryDark : semanticColors.text.secondary,
     },
   },
   components: {
@@ -240,11 +262,11 @@ export const createDenimThemeOptions = (isDark: boolean): ThemeOptions => ({
       styleOverrides: {
         root: {
           borderRadius: 16,
-          border: `1px solid ${isDark ? denimColors[800] : denimColors[200]}`,
-          backgroundColor: isDark ? denimColors[900] : '#ffffff',
+          border: `1px solid ${isDark ? alpha('#ffffff', 0.14) : alpha('#17100e', 0.10)}`,
+          backgroundColor: isDark ? semanticColors.background.paperDark : semanticColors.background.paper,
           transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
           '&:hover': {
-            borderColor: isDark ? denimColors[700] : denimColors[300],
+            borderColor: isDark ? alpha(semanticColors.secondary, 0.45) : alpha(semanticColors.secondary, 0.25),
             boxShadow: denimShadows.hover,
             transform: 'translateY(-2px)',
           },
@@ -266,18 +288,18 @@ export const createDenimThemeOptions = (isDark: boolean): ThemeOptions => ({
           background: denimGradients.button,
           color: '#ffffff',
           '&:hover': {
-            background: `linear-gradient(45deg, ${denimColors[600]} 30%, ${denimColors[700]} 90%)`,
+            background: `linear-gradient(45deg, ${brandColors.primary[600]} 30%, ${brandColors.primary[700]} 90%)`,
           },
           '&:active': {
-            background: `linear-gradient(45deg, ${denimColors[700]} 30%, ${denimColors[800]} 90%)`,
+            background: `linear-gradient(45deg, ${brandColors.primary[700]} 30%, ${brandColors.primary[800]} 90%)`,
           },
         },
         outlined: {
-          borderColor: denimColors[300],
-          color: denimColors[600],
+          borderColor: alpha(semanticColors.secondary, 0.35),
+          color: semanticColors.secondary,
           '&:hover': {
-            borderColor: denimColors[500],
-            backgroundColor: alpha(denimColors[500], 0.04),
+            borderColor: alpha(semanticColors.secondary, 0.55),
+            backgroundColor: alpha(semanticColors.secondary, 0.06),
           },
         },
       },
@@ -288,18 +310,18 @@ export const createDenimThemeOptions = (isDark: boolean): ThemeOptions => ({
           '& .MuiOutlinedInput-root': {
             borderRadius: 10,
             '& fieldset': {
-              borderColor: isDark ? denimColors[700] : denimColors[300],
+              borderColor: isDark ? alpha('#ffffff', 0.22) : alpha('#17100e', 0.16),
             },
             '&:hover fieldset': {
-              borderColor: isDark ? denimColors[600] : denimColors[400],
+              borderColor: isDark ? alpha('#ffffff', 0.34) : alpha('#17100e', 0.24),
             },
             '&.Mui-focused fieldset': {
-              borderColor: denimColors[500],
+              borderColor: semanticColors.secondary,
             },
           },
           '& .MuiInputLabel-root': {
             '&.Mui-focused': {
-              color: denimColors[500],
+              color: semanticColors.secondary,
             },
           },
         },
@@ -311,16 +333,16 @@ export const createDenimThemeOptions = (isDark: boolean): ThemeOptions => ({
           borderRadius: 8,
         },
         colorPrimary: {
-          backgroundColor: denimColors[500],
+          backgroundColor: semanticColors.primary,
           color: '#ffffff',
         },
         colorSecondary: {
-          backgroundColor: denimColors[400],
+          backgroundColor: semanticColors.secondary,
           color: '#ffffff',
         },
         outlined: {
-          borderColor: denimColors[300],
-          color: denimColors[600],
+          borderColor: alpha(semanticColors.secondary, 0.35),
+          color: semanticColors.secondary,
         },
       },
     },
@@ -328,18 +350,18 @@ export const createDenimThemeOptions = (isDark: boolean): ThemeOptions => ({
       styleOverrides: {
         root: {
           borderRadius: 10,
-          backgroundColor: isDark ? denimColors[800] : denimColors[200],
+          backgroundColor: isDark ? alpha('#ffffff', 0.12) : alpha('#17100e', 0.08),
         },
         bar: {
           borderRadius: 10,
-          backgroundColor: denimColors[500],
+          backgroundColor: semanticColors.primary,
         },
       },
     },
     MuiAvatar: {
       styleOverrides: {
         root: {
-          backgroundColor: denimColors[500],
+          backgroundColor: semanticColors.secondary,
           color: '#ffffff',
         },
       },
@@ -349,28 +371,28 @@ export const createDenimThemeOptions = (isDark: boolean): ThemeOptions => ({
         root: {
           background: denimGradients.button,
           '&:hover': {
-            background: `linear-gradient(45deg, ${denimColors[600]} 30%, ${denimColors[700]} 90%)`,
+            background: `linear-gradient(45deg, ${brandColors.primary[600]} 30%, ${brandColors.primary[700]} 90%)`,
           },
         },
       },
     },
   },
-});
+})
 
 // CSS Custom Properties for denim theme
 export const denimCSSVariables = `
   /* Denim Color Palette */
-  --denim-50: ${denimColors[50]};
-  --denim-100: ${denimColors[100]};
-  --denim-200: ${denimColors[200]};
-  --denim-300: ${denimColors[300]};
-  --denim-400: ${denimColors[400]};
-  --denim-500: ${denimColors[500]};
-  --denim-600: ${denimColors[600]};
-  --denim-700: ${denimColors[700]};
-  --denim-800: ${denimColors[800]};
-  --denim-900: ${denimColors[900]};
-  --denim-950: ${denimColors[950]};
+  --denim-50: ${brandColors.accent[50]};
+  --denim-100: ${brandColors.accent[100]};
+  --denim-200: ${brandColors.accent[200]};
+  --denim-300: ${brandColors.accent[300]};
+  --denim-400: ${brandColors.accent[400]};
+  --denim-500: ${brandColors.accent[500]};
+  --denim-600: ${brandColors.accent[600]};
+  --denim-700: ${brandColors.accent[700]};
+  --denim-800: ${brandColors.accent[800]};
+  --denim-900: ${brandColors.accent[900]};
+  --denim-950: ${brandColors.accent[950]};
   
   /* Semantic Colors */
   --denim-primary: ${semanticColors.primary};
@@ -408,13 +430,13 @@ export const denimCSSVariables = `
   --denim-shadow-hover: ${denimShadows.hover};
   
   /* Role Colors */
-  --denim-role-employee: ${denimColors[400]};
-  --denim-role-team-lead: ${denimColors[500]};
-  --denim-role-manager: ${denimColors[600]};
-  --denim-role-hr: ${denimColors[700]};
-  --denim-role-admin: ${denimColors[800]};
-  --denim-role-super-admin: ${denimColors[900]};
-`;
+  --denim-role-employee: ${brandColors.accent[300]};
+  --denim-role-team-lead: ${brandColors.accent[500]};
+  --denim-role-manager: ${brandColors.accent[600]};
+  --denim-role-hr: ${brandColors.accent[700]};
+  --denim-role-admin: ${brandColors.accent[800]};
+  --denim-role-super-admin: ${brandColors.accent[900]};
+`
 
 // Utility functions
 export const getDenimColor = (shade: keyof typeof denimColors) => denimColors[shade];
@@ -424,21 +446,21 @@ export const getDenimShadow = (type: keyof typeof denimShadows) => denimShadows[
 // Role-based color helper
 export const getRoleColor = (role: string) => {
   switch (role?.toLowerCase()) {
-    case 'employee': return denimColors[400];
-    case 'senior_employee': return denimColors[500];
+    case 'employee': return brandColors.accent[300];
+    case 'senior_employee': return brandColors.accent[400];
     case 'team_lead':
-    case 'team_leader': return denimColors[500];
+    case 'team_leader': return brandColors.accent[500];
     case 'department_manager':
-    case 'manager': return denimColors[600];
+    case 'manager': return brandColors.accent[600];
     case 'hr_manager':
-    case 'hr': return denimColors[700];
+    case 'hr': return brandColors.accent[700];
     case 'admin':
-    case 'administrator': return denimColors[800];
+    case 'administrator': return brandColors.accent[800];
     case 'super_admin':
-    case 'super_administrator': return denimColors[900];
-    default: return denimColors[500];
+    case 'super_administrator': return brandColors.accent[900];
+    default: return brandColors.accent[500];
   }
-};
+}
 
 // Status color helper with denim integration
 export const getStatusColor = (status: string, variant: 'main' | 'light' | 'dark' = 'main') => {
@@ -457,6 +479,6 @@ export const getStatusColor = (status: string, variant: 'main' | 'light' | 'dark
 
   // Default to denim info color
   return statusColors.info[variant];
-};
+}
 
-export default denimColors;
+export default denimColors

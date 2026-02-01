@@ -7,6 +7,26 @@ export default {
   theme: {
     extend: {
       colors: {
+        /* Semantic tokens (preferred): bg-background, text-foreground, etc. */
+        background: 'hsl(var(--background))',
+        foreground: 'hsl(var(--foreground))',
+        card: 'hsl(var(--card))',
+        'card-foreground': 'hsl(var(--card-foreground))',
+        popover: 'hsl(var(--popover))',
+        'popover-foreground': 'hsl(var(--popover-foreground))',
+        muted: 'hsl(var(--muted))',
+        'muted-foreground': 'hsl(var(--muted-foreground))',
+        border: 'hsl(var(--border) / 0.18)',
+        input: 'hsl(var(--input) / 0.18)',
+        ring: 'hsl(var(--ring))',
+        brand: {
+          primary: 'hsl(var(--primary))',
+          'primary-foreground': 'hsl(var(--primary-foreground))',
+          accent: 'hsl(var(--accent))',
+          'accent-foreground': 'hsl(var(--accent-foreground))',
+          secondary: 'hsl(var(--secondary))',
+          'secondary-foreground': 'hsl(var(--secondary-foreground))',
+        },
         // Denim Color Palette
         denim: {
           50: '#f0f8fe',
