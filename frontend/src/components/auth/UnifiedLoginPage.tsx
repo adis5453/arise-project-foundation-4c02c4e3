@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
     Box,
     Card,
@@ -24,9 +24,24 @@ import { toast } from 'sonner';
 
 export const UnifiedLoginPage = () => {
     const navigate = useNavigate();
+    const location = useLocation();
     const theme = useTheme();
-    const { login, loading } = useAuth();
+    const { login, loading, isAuthenticated } = useAuth();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
+    const redirectTo = useMemo(() => {
+        const from = (location.state as any)?.from
+        const pathname = from?.pathname as string | undefined
+        // Prevent redirecting back to login itself.
+        if (!pathname || pathname.startsWith('/login')) return '/dashboard'
+        return pathname
+    }, [location.state])
+
+    useEffect(() => {
+        if (!loading && isAuthenticated) {
+            navigate(redirectTo, { replace: true })
+        }
+    }, [isAuthenticated, loading, navigate, redirectTo])
 
     const [formData, setFormData] = useState({
         email: 'admin@arisehrm.com',
@@ -42,7 +57,7 @@ export const UnifiedLoginPage = () => {
         try {
             await login(formData);
             toast.success('Login successful');
-            navigate('/dashboard');
+            navigate(redirectTo, { replace: true });
         } catch (err: any) {
             console.error(err);
             setError(err.message || 'Login failed');
