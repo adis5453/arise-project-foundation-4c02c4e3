@@ -35,8 +35,10 @@
   --muted-foreground: 10 3% 40%; /* #6a6462 */
 
   /* Inputs / borders */
-  --border: var(--foreground);
-  --input: var(--foreground);
+  /* Subtle strokes on the paper background (avoid “outlined UI”).
+     Keep these as plain HSL so Tailwind opacity modifiers work correctly. */
+  --border: 15 10% 80%;
+  --input: 15 10% 80%;
   --ring: 237 100% 44%;
 
   /* Radius + shadows */
@@ -92,8 +94,9 @@
   --muted: 12 6% 34%; /* #56504e */
   --muted-foreground: 250 10% 86%; /* #dddbe0 */
 
-  --border: 0 0% 100%;
-  --input: 0 0% 100%;
+  /* Softer borders in dark mode as well */
+  --border: 12 6% 34%;
+  --input: 12 6% 34%;
   --ring: 237 100% 44%;
 }
 
