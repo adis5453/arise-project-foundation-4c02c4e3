@@ -43,6 +43,16 @@ export function HomeFeatureBento() {
         <div className="absolute -bottom-28 -right-28 h-[28rem] w-[28rem] rounded-full bg-brand-accent/10 blur-3xl" />
       </div>
 
+      {/* subtle gradient depth */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{
+          backgroundImage:
+            "radial-gradient(900px 520px at 15% 0%, hsl(var(--ring) / 0.18) 0%, transparent 60%), radial-gradient(760px 520px at 90% 15%, hsl(var(--accent) / 0.14) 0%, transparent 60%)",
+        }}
+      />
+
       <div className="mx-auto max-w-6xl px-6 py-28">
         <div className="grid items-start gap-14 lg:grid-cols-[0.92fr_1.08fr]">
           <div>
@@ -59,7 +69,7 @@ export function HomeFeatureBento() {
             {FEATURES.map(({ icon: Icon, title, desc, span }) => (
               <div
                 key={title}
-                className={`group rounded-3xl border border-border bg-background/80 p-6 text-foreground shadow-denim-sm backdrop-blur transition hover:bg-background/90 hover:shadow-denim-hover ${span}`}
+                className={`group rounded-3xl border border-background/15 bg-muted/90 p-7 text-foreground shadow-denim-sm transition hover:bg-muted hover:shadow-denim-hover ${span}`}
               >
                 <div className="flex items-center gap-3">
                   <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-brand-secondary text-brand-secondary-foreground">
