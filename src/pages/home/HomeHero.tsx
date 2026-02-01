@@ -33,7 +33,7 @@ export function HomeHero() {
       <div className="mx-auto max-w-7xl px-6 pb-16 pt-14 sm:pb-20 sm:pt-16 2xl:max-w-[1400px] 2xl:px-10">
         <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] xl:grid-cols-[1.1fr_0.9fr]">
           <div className="relative">
-            <p className="inline-flex w-fit items-center gap-2 rounded-full border border-border bg-card/60 px-4 py-2 text-sm text-muted-foreground backdrop-blur">
+            <p className="inline-flex w-fit items-center gap-2 rounded-full border border-border bg-card/60 px-3.5 py-1.5 text-xs font-medium text-muted-foreground backdrop-blur">
               Built for teams that move fast
             </p>
 
@@ -48,14 +48,14 @@ export function HomeHero() {
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
                 to="/login"
-                className="inline-flex items-center gap-2 rounded-xl bg-brand-primary px-5 py-3 text-sm font-medium text-brand-primary-foreground shadow-denim-md transition hover:shadow-denim-hover"
+                className="inline-flex items-center gap-2 rounded-xl bg-brand-primary px-5 py-2.5 text-sm font-medium text-brand-primary-foreground shadow-denim-md transition hover:shadow-denim-hover"
               >
                 Log in
                 <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
                 to="/dashboard"
-                className="inline-flex items-center gap-2 rounded-xl border border-border bg-card/60 px-5 py-3 text-sm font-medium text-foreground backdrop-blur transition hover:bg-card"
+                className="inline-flex items-center gap-2 rounded-xl border border-border bg-card/60 px-5 py-2.5 text-sm font-medium text-foreground backdrop-blur transition hover:bg-card"
               >
                 Open dashboard
               </Link>

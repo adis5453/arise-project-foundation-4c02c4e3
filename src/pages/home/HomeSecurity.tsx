@@ -16,14 +16,14 @@ export const HomeSecurity = React.forwardRef<HTMLElement, React.ComponentPropsWi
           <div className="mt-6 flex flex-wrap gap-3">
             <Link
               to="/login"
-              className="inline-flex items-center gap-2 rounded-xl bg-brand-primary px-5 py-3 text-sm font-medium text-brand-primary-foreground shadow-denim-md transition hover:shadow-denim-hover"
+              className="inline-flex items-center gap-2 rounded-xl bg-brand-primary px-5 py-2.5 text-sm font-medium text-brand-primary-foreground shadow-denim-md transition hover:shadow-denim-hover"
             >
               Log in
               <ArrowRight className="h-4 w-4" />
             </Link>
             <Link
               to="/dashboard"
-              className="inline-flex items-center gap-2 rounded-xl border border-border bg-card/60 px-5 py-3 text-sm font-medium text-foreground backdrop-blur transition hover:bg-card"
+              className="inline-flex items-center gap-2 rounded-xl border border-border bg-card/60 px-5 py-2.5 text-sm font-medium text-foreground backdrop-blur transition hover:bg-card"
             >
               Open dashboard
             </Link>
