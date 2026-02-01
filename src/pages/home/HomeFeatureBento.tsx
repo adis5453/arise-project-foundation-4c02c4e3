@@ -34,9 +34,15 @@ const FEATURES = [
   },
 ];
 
-export function HomeFeatureBento() {
-  return (
-    <section id="features" className="relative overflow-hidden bg-background text-foreground">
+export const HomeFeatureBento = React.forwardRef<HTMLElement, React.ComponentPropsWithoutRef<"section">>(
+  function HomeFeatureBento(props, ref) {
+    return (
+      <section
+        ref={ref}
+        id="features"
+        className="relative overflow-hidden bg-background text-foreground"
+        {...props}
+      >
       {/* paper glow */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
         <div className="absolute -left-24 -top-24 h-96 w-96 rounded-full bg-brand-primary/10 blur-3xl" />
@@ -77,6 +83,9 @@ export function HomeFeatureBento() {
           </div>
         </div>
       </div>
-    </section>
-  );
-}
+      </section>
+    );
+  },
+);
+
+HomeFeatureBento.displayName = "HomeFeatureBento";
