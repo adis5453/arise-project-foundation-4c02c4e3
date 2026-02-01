@@ -53,7 +53,7 @@ export function HomeFeatureBento() {
         }}
       />
 
-      <div className="mx-auto max-w-7xl px-6 pt-28 pb-28 lg:pb-36 2xl:max-w-[1400px] 2xl:px-10">
+      <div className="mx-auto max-w-7xl px-6 pt-24 pb-44 lg:pb-52 2xl:max-w-[1400px] 2xl:px-10">
         <div className="grid items-start gap-14 lg:grid-cols-[0.92fr_1.08fr] xl:grid-cols-[0.85fr_1.15fr]">
           <div>
             <h2 className="max-w-[18ch] text-balance text-4xl font-semibold tracking-tight text-background sm:text-5xl">
@@ -65,21 +65,21 @@ export function HomeFeatureBento() {
           </div>
 
           {/* 21st.dev-inspired bento grid */}
-          <div className="grid gap-4 sm:grid-cols-3 lg:mt-10 xl:mt-14">
+          <div className="grid gap-4 sm:grid-cols-3 lg:mt-10 xl:mt-12">
             {FEATURES.map(({ icon: Icon, title, desc, span }) => (
               <div
                 key={title}
-                className={`group rounded-3xl border border-background/15 bg-muted/90 p-7 text-foreground shadow-denim-sm transition hover:bg-muted hover:shadow-denim-hover ${span}`}
+                className={`group rounded-3xl border border-background/10 bg-background/5 p-6 text-background shadow-denim-sm backdrop-blur transition hover:bg-background/10 hover:shadow-denim-hover ${span}`}
               >
                 <div className="flex items-center gap-3">
-                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-brand-secondary text-brand-secondary-foreground">
+                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-brand-secondary text-brand-secondary-foreground shadow-denim-sm">
                     <Icon className="h-5 w-5" />
                   </span>
-                  <h3 className="font-semibold tracking-tight">{title}</h3>
+                  <h3 className="font-semibold tracking-tight text-background">{title}</h3>
                 </div>
-                <p className="mt-3 text-sm text-muted-foreground">{desc}</p>
-                <div className="mt-5 h-px w-full bg-border/60" />
-                <p className="mt-4 text-xs text-muted-foreground">
+                <p className="mt-3 text-sm text-background/75">{desc}</p>
+                <div className="mt-5 h-px w-full bg-background/10" />
+                <p className="mt-4 text-xs text-background/65">
                   Designed to feel fast: clear hierarchy, bento layouts, and role-aware navigation.
                 </p>
               </div>

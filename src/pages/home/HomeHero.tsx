@@ -33,11 +33,11 @@ export function HomeHero() {
       <div className="mx-auto max-w-7xl px-6 pb-16 pt-14 sm:pb-20 sm:pt-16 2xl:max-w-[1400px] 2xl:px-10">
         <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] xl:grid-cols-[1.1fr_0.9fr]">
           <div className="relative">
-            <p className="inline-flex w-fit items-center gap-2 rounded-full border border-border bg-card/60 px-3.5 py-1.5 text-xs font-medium text-muted-foreground backdrop-blur">
+            <p className="inline-flex w-fit items-center gap-2 rounded-full border border-border/50 bg-card/40 px-3.5 py-1.5 text-xs font-medium text-muted-foreground shadow-denim-sm backdrop-blur">
               Built for teams that move fast
             </p>
 
-            <h1 className="mt-5 max-w-[18ch] text-balance text-4xl font-semibold tracking-tight sm:text-6xl">
+            <h1 className="mt-5 max-w-[18ch] text-balance text-4xl font-semibold leading-[1.05] tracking-tight sm:text-6xl">
               Your workstream, team, and time-off—one place.
             </h1>
 
