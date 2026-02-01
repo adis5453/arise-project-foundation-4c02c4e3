@@ -2,6 +2,7 @@ import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "./styles/globals.css";  // ✅ FIXED: Correct path
+import "./styles/preflight.css";
 import "./App.css";
 import ErrorBoundary from "./components/common/ErrorBoundary";
 // Removed test imports - unnecessary in production
