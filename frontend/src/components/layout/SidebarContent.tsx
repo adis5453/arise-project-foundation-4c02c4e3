@@ -15,6 +15,7 @@ import {
   Collapse,
   Stack,
   alpha,
+  useTheme,
 } from '@mui/material'
 import {
   Dashboard as DashboardIcon,
@@ -75,6 +76,7 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({
   onSidebarMiniToggle,
 }) => {
   const { profile } = useAuth()
+  const theme = useTheme()
 
   interface NavigationItem {
     id: string
@@ -333,7 +335,7 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({
       <Box sx={{
         p: mini ? 2 : 3,
         textAlign: 'center',
-        borderBottom: '1px solid rgba(255,255,255,0.1)',
+        borderBottom: `1px solid ${alpha(theme.palette.divider, 0.35)}`,
         minHeight: 80,
         display: 'flex',
         alignItems: 'center',
@@ -349,14 +351,14 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({
               Arise HRM
             </Typography>
             <Typography variant="caption" sx={{
-              color: alpha('#ffffff', 0.7)
+              color: alpha(theme.palette.text.primary, 0.7)
             }}>
               Human Resource Management
             </Typography>
           </Box>
         ) : (
           <Avatar sx={{
-            bgcolor: alpha('#ffffff', 0.1),
+            bgcolor: alpha(theme.palette.common.white, 0.08),
             width: 40,
             height: 40
           }}>
@@ -368,7 +370,7 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({
       {/* Enhanced User Profile */}
       <Box sx={{
         p: mini ? 1.5 : 3,
-        borderBottom: '1px solid rgba(255,255,255,0.1)',
+        borderBottom: `1px solid ${alpha(theme.palette.divider, 0.35)}`,
         minHeight: mini ? 70 : 100
       }}>
         <Stack
@@ -381,7 +383,7 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({
             sx={{
               width: mini ? 32 : 48,
               height: mini ? 32 : 48,
-              backgroundColor: alpha('#ffffff', 0.2),
+              backgroundColor: alpha(theme.palette.common.white, 0.12),
             }}
           >
             {profile?.first_name?.[0]}{profile?.last_name?.[0]}
@@ -398,7 +400,7 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({
                 {profile?.first_name} {profile?.last_name}
               </Typography>
               <Typography variant="caption" sx={{
-                color: alpha('#ffffff', 0.7),
+                color: alpha(theme.palette.text.primary, 0.7),
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
                 whiteSpace: 'nowrap'
@@ -467,13 +469,13 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({
                       color: 'inherit',
                       minHeight: 48,
                       '&.Mui-selected': {
-                        backgroundColor: alpha('#ffffff', 0.15),
+                        backgroundColor: alpha(theme.palette.primary.main, 0.18),
                         '&:hover': {
-                          backgroundColor: alpha('#ffffff', 0.2),
+                          backgroundColor: alpha(theme.palette.primary.main, 0.24),
                         },
                       },
                       '&:hover': {
-                        backgroundColor: alpha('#ffffff', 0.1),
+                        backgroundColor: alpha(theme.palette.common.white, 0.06),
                       },
                     }}
                   >
@@ -518,14 +520,14 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({
                           sx={{
                             mb: 0.5,
                             borderRadius: 2,
-                            color: alpha('#ffffff', 0.8),
+                            color: alpha(theme.palette.text.primary, 0.86),
                             minHeight: 44,
                             '&.Mui-selected': {
-                              backgroundColor: alpha('#ffffff', 0.1),
-                              color: '#ffffff',
+                              backgroundColor: alpha(theme.palette.primary.main, 0.18),
+                              color: theme.palette.text.primary,
                             },
                             '&:hover': {
-                              backgroundColor: alpha('#ffffff', 0.05),
+                              backgroundColor: alpha(theme.palette.common.white, 0.05),
                             },
                           }}
                         >
@@ -558,7 +560,7 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({
       {/* ✅ FIXED: Enhanced Footer with ThemeToggle */}
       <Box sx={{
         p: 2,
-        borderTop: '1px solid rgba(255,255,255,0.1)',
+        borderTop: `1px solid ${alpha(theme.palette.divider, 0.35)}`,
         minHeight: 70
       }}>
         <Stack

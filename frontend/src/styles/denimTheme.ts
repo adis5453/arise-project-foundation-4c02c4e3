@@ -53,9 +53,11 @@ export const semanticColors = {
   background: {
     light: '#f4f3ec',
     main: '#ffffff',
-    dark: '#17100e',
+    // Dark-glass base (deep navy/ink)
+    dark: '#070913',
     paper: '#ffffff',
-    paperDark: '#080e1c',
+    // Dark surface for cards/drawers (ink glass)
+    paperDark: '#0b1224',
   },
 
   text: {
@@ -258,18 +260,71 @@ export const createDenimThemeOptions = (isDark: boolean): ThemeOptions => ({
     },
   },
   components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          backgroundImage: isDark
+            ? `radial-gradient(900px 520px at 10% 0%, ${alpha(brandColors.accent[500], 0.14)} 0%, transparent 60%),
+               radial-gradient(760px 520px at 90% 10%, ${alpha(brandColors.primary[500], 0.12)} 0%, transparent 55%)`
+            : undefined,
+        },
+      },
+    },
     MuiCard: {
       styleOverrides: {
         root: {
           borderRadius: 16,
           border: `1px solid ${isDark ? alpha('#ffffff', 0.14) : alpha('#17100e', 0.10)}`,
-          backgroundColor: isDark ? semanticColors.background.paperDark : semanticColors.background.paper,
+          backgroundColor: isDark
+            ? alpha(semanticColors.background.paperDark, 0.72)
+            : semanticColors.background.paper,
+          backdropFilter: isDark ? 'blur(18px)' : undefined,
           transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
           '&:hover': {
             borderColor: isDark ? alpha(semanticColors.secondary, 0.45) : alpha(semanticColors.secondary, 0.25),
             boxShadow: denimShadows.hover,
             transform: 'translateY(-2px)',
           },
+        },
+      },
+    },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          backgroundImage: 'none',
+          ...(isDark
+            ? {
+                backgroundColor: alpha(semanticColors.background.paperDark, 0.72),
+                backdropFilter: 'blur(18px)',
+                border: `1px solid ${alpha('#ffffff', 0.10)}`,
+              }
+            : {}),
+        },
+      },
+    },
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          ...(isDark
+            ? {
+                backgroundColor: alpha(semanticColors.background.paperDark, 0.60),
+                backdropFilter: 'blur(18px)',
+                borderBottom: `1px solid ${alpha('#ffffff', 0.10)}`,
+              }
+            : {}),
+        },
+      },
+    },
+    MuiDrawer: {
+      styleOverrides: {
+        paper: {
+          ...(isDark
+            ? {
+                backgroundColor: alpha(semanticColors.background.paperDark, 0.70),
+                backdropFilter: 'blur(20px)',
+                borderRight: `1px solid ${alpha('#ffffff', 0.10)}`,
+              }
+            : {}),
         },
       },
     },

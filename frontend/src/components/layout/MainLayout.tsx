@@ -85,13 +85,17 @@ const SidebarContainer = styled(Box, {
   left: 0,
   height: '100vh',
   width: sidebarMini ? SIDEBAR_MINI_WIDTH : SIDEBAR_WIDTH,
-  background: `linear-gradient(180deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.dark} 100%)`,
-  color: theme.palette.primary.contrastText,
+  background: `linear-gradient(180deg,
+    ${alpha(theme.palette.background.paper, 0.78)} 0%,
+    ${alpha(theme.palette.background.default, 0.72)} 100%)`,
+  color: theme.palette.text.primary,
   zIndex: theme.zIndex.drawer + 1,
   display: 'flex',
   flexDirection: 'column',
   overflow: 'hidden',
-  boxShadow: theme.shadows[8],
+  boxShadow: theme.shadows[10],
+  backdropFilter: 'blur(22px)',
+  borderRight: `1px solid ${alpha(theme.palette.divider, 0.35)}`,
   transform: sidebarOpen ? 'translateX(0)' : `translateX(-${sidebarMini ? SIDEBAR_MINI_WIDTH : SIDEBAR_WIDTH}px)`,
   transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
   willChange: 'transform',
@@ -102,7 +106,15 @@ const SidebarContainer = styled(Box, {
     right: 0,
     width: 1,
     height: '100%',
-    background: 'rgba(255,255,255,0.1)',
+    background: alpha(theme.palette.common.white, 0.08),
+  },
+  '&::after': {
+    content: '""',
+    position: 'absolute',
+    inset: 0,
+    pointerEvents: 'none',
+    background: `radial-gradient(600px 260px at 20% 0%, ${alpha(theme.palette.primary.main, 0.18)} 0%, transparent 60%),
+                 radial-gradient(420px 260px at 80% 30%, ${alpha(theme.palette.secondary.main, 0.12)} 0%, transparent 55%)`,
   },
   [theme.breakpoints.down('lg')]: {
     transform: sidebarOpen ? 'translateX(0)' : `translateX(-${SIDEBAR_WIDTH}px)`,
@@ -125,15 +137,17 @@ const SidebarToggleButton = styled(IconButton, {
     16,
   transform: 'translateY(-50%)',
   zIndex: theme.zIndex.drawer + 3,
-  backgroundColor: theme.palette.primary.main,
-  color: theme.palette.primary.contrastText,
+  backgroundColor: alpha(theme.palette.background.paper, 0.75),
+  color: theme.palette.text.primary,
+  border: `1px solid ${alpha(theme.palette.divider, 0.35)}`,
+  backdropFilter: 'blur(16px)',
   width: 44,
   height: 44,
   borderRadius: '50%',
   boxShadow: theme.shadows[6],
   transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
   '&:hover': {
-    backgroundColor: theme.palette.primary.dark,
+    backgroundColor: alpha(theme.palette.background.paper, 0.9),
     transform: 'translateY(-50%) scale(1.05)',
     boxShadow: theme.shadows[8],
   },
@@ -152,7 +166,7 @@ const MainContent = styled(Box, {
 })<{ sidebarOpen: boolean; sidebarMini: boolean }>(({ theme, sidebarOpen, sidebarMini }) => ({
   transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
   minHeight: '100vh',
-  backgroundColor: theme.palette.background.default,
+  backgroundColor: 'transparent',
   flex: 1,
   width: '100%',
   marginLeft: sidebarOpen ?
@@ -176,8 +190,10 @@ const MobileTopBar = styled(AppBar)(({ theme }) => ({
   display: 'none',
   [theme.breakpoints.down('md')]: {
     display: 'flex',
-    background: `linear-gradient(90deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.dark} 100%)`,
-    boxShadow: theme.shadows[4],
+    background: alpha(theme.palette.background.paper, 0.72),
+    backdropFilter: 'blur(18px)',
+    borderBottom: `1px solid ${alpha(theme.palette.divider, 0.35)}`,
+    boxShadow: theme.shadows[6],
   },
 }))
 
@@ -294,7 +310,15 @@ export function MainLayout({ children }: MainLayoutProps) {
 
 
   return (
-    <Box sx={{ display: 'flex', minHeight: '100vh' }}>
+    <Box
+      sx={{
+        display: 'flex',
+        minHeight: '100vh',
+        position: 'relative',
+        background: `radial-gradient(900px 520px at 10% 0%, ${alpha(theme.palette.primary.main, 0.12)} 0%, transparent 60%),
+                     radial-gradient(760px 520px at 90% 10%, ${alpha(theme.palette.secondary.main, 0.10)} 0%, transparent 55%)`,
+      }}
+    >
       {!isMobile && (
         <SidebarContainer sidebarOpen={sidebarOpen} sidebarMini={sidebarMini}>
           <SidebarContent
@@ -398,7 +422,15 @@ export function MainLayout({ children }: MainLayoutProps) {
         anchor="left"
         open={mobileDrawerOpen}
         onClose={() => setMobileDrawerOpen(false)}
-        sx={{ display: { xs: 'block', md: 'none' }, '& .MuiDrawer-paper': { width: SIDEBAR_WIDTH, background: `linear-gradient(180deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.dark} 100%)` } }}
+        sx={{
+          display: { xs: 'block', md: 'none' },
+          '& .MuiDrawer-paper': {
+            width: SIDEBAR_WIDTH,
+            background: alpha(theme.palette.background.paper, 0.78),
+            backdropFilter: 'blur(22px)',
+            borderRight: `1px solid ${alpha(theme.palette.divider, 0.35)}`,
+          }
+        }}
       >
         <SidebarContent
           mini={false}
