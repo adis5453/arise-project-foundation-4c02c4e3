@@ -88,10 +88,10 @@ export { DatabaseAdminPanel, UserManagement }
 
 // Auth Components
 import { AuthGuard } from './auth/AuthGuard'
-import LoginPage from './auth/LoginPageSimple'
+import UnifiedLoginPage from './auth/UnifiedLoginPage'
 import { PasswordStrengthMeter } from './auth/PasswordStrengthMeter'
 import { PermissionGuard } from './auth/PermissionGuard'
-export { AuthGuard, LoginPage, PasswordStrengthMeter, PermissionGuard }
+export { AuthGuard, UnifiedLoginPage, PasswordStrengthMeter, PermissionGuard }
 
 // Common Components
 import MetricCard from './common/MetricCard'
@@ -165,7 +165,7 @@ export const CommonComponents = {
 
 export const AuthComponents = {
   AuthGuard,
-  LoginPage,
+  UnifiedLoginPage,
   PasswordStrengthMeter,
   PermissionGuard,
 }
