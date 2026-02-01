@@ -4,6 +4,50 @@
 /* Tailwind CSS (v4) */
 @import "tailwindcss";
 
+/*
+  Semantic HSL tokens (shadcn-style). We only define these variables here so
+  Tailwind classes like bg-background / text-foreground work reliably.
+  Existing theme variables remain unchanged.
+*/
+:root {
+  --background: 50 33% 96%;
+  --foreground: 225 35% 12%;
+
+  --card: 0 0% 100%;
+  --card-foreground: 225 35% 12%;
+
+  --popover: 0 0% 100%;
+  --popover-foreground: 225 35% 12%;
+
+  --muted: 210 25% 94%;
+  --muted-foreground: 220 12% 42%;
+
+  --border: 220 14% 86%;
+  --input: 220 14% 86%;
+  --ring: 214 86% 57%;
+
+  --primary: 214 86% 57%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 210 25% 94%;
+  --secondary-foreground: 225 35% 12%;
+  --accent: 16 100% 50%;
+  --accent-foreground: 0 0% 100%;
+}
+
+body.dark {
+  --background: 222 49% 12%;
+  --foreground: 210 40% 98%;
+  --card: 222 49% 14%;
+  --card-foreground: 210 40% 98%;
+  --popover: 222 49% 14%;
+  --popover-foreground: 210 40% 98%;
+  --muted: 222 22% 20%;
+  --muted-foreground: 215 20% 70%;
+  --border: 215 18% 24%;
+  --input: 215 18% 24%;
+  --ring: 214 86% 57%;
+}
+
 /* CSS Variables for Denim HRM Theme */
 :root {
   --color-primary: #4997e8;
