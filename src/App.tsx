@@ -32,15 +32,7 @@ const PositionsPage = lazy(() => import('./components/organization/PositionsPage
 const SuperAdminUserCreation = lazy(() => import('./components/admin/SuperAdminUserCreation'))
 const BenefitsManagement = lazy(() => import('./components/benefits/BenefitsManagement'))
 const ProjectManagement = lazy(() => import('./components/projects/ProjectManagement'))
-const LoginPage = lazy(() => import('./components/auth/LoginPageSimple'))
 const UnifiedLoginPage = lazy(() => import('./components/auth/UnifiedLoginPage'))
-// const RoleBasedLoginSelector = lazy(() => import('./components/auth/RoleBasedLoginSelector'))
-const EmployeeLogin = lazy(() => import('./components/auth/EmployeeLogin'))
-const TeamLeaderLogin = lazy(() => import('./components/auth/TeamLeaderLogin'))
-const HRManagerLogin = lazy(() => import('./components/auth/HRManagerLogin'))
-const DepartmentManagerLogin = lazy(() => import('./components/auth/DepartmentManagerLogin'))
-const AdminLogin = lazy(() => import('./components/auth/AdminLogin'))
-const SuperAdminLogin = lazy(() => import('./components/auth/SuperAdminLogin'))
 const SettingsPage = lazy(() => import('./components/settings/SettingsPage'))
 import ReportsPage from './components/reports/ReportsPage'
 // const ReportsPage = lazy(() => import('./components/reports/ReportsPage'))
@@ -92,13 +84,8 @@ function AppRoutes() {
 
       {/* Role-based login routes */}
       <Route path="/login" element={<UnifiedLoginPage />} />
-      <Route path="/login/simple" element={<LoginPage />} />
-      <Route path="/login/employee" element={<EmployeeLogin />} />
-      <Route path="/login/team-leader" element={<TeamLeaderLogin />} />
-      <Route path="/login/hr-manager" element={<HRManagerLogin />} />
-      <Route path="/login/department-manager" element={<DepartmentManagerLogin />} />
-      <Route path="/login/admin" element={<AdminLogin />} />
-      <Route path="/login/super-admin" element={<SuperAdminLogin />} />
+      {/* Backwards-compat: send any old role-based login URLs to the single login page */}
+      <Route path="/login/*" element={<Navigate to="/login" replace />} />
       <Route
         path="/*"
         element={
