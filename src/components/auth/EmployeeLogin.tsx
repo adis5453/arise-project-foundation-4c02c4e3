@@ -22,7 +22,7 @@ interface LoginFormData {
 export const EmployeeLogin: React.FC = () => {
   const navigate = useNavigate()
   const location = useLocation()
-  const { login, isLoading } = useAuth()
+  const { login, isLoading, isAuthenticated } = useAuth()
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [formData, setFormData] = useState<LoginFormData>({
@@ -33,6 +33,7 @@ export const EmployeeLogin: React.FC = () => {
 
   const roleData = location.state?.roleData
   const autoFill = location.state?.autoFill
+  const fromPath = (location.state as any)?.from?.pathname as string | undefined
   const demoCredentials = location.state?.demoCredentials || {
     email: 'employee@arisehrm.test',
     password: 'Emp@1234'
@@ -48,6 +49,12 @@ export const EmployeeLogin: React.FC = () => {
       }))
     }
   }, [autoFill, demoCredentials])
+
+  // If user is already authenticated (e.g., refresh), return to the original route.
+  useEffect(() => {
+    if (!isAuthenticated) return
+    navigate(fromPath || '/dashboard', { replace: true })
+  }, [fromPath, isAuthenticated, navigate])
 
   const handleInputChange = useCallback((field: keyof LoginFormData) => (
     event: React.ChangeEvent<HTMLInputElement>
@@ -77,7 +84,7 @@ export const EmployeeLogin: React.FC = () => {
         toast.success('Welcome to your workspace!', {
           description: 'Access your tasks, schedule, and personal information'
         })
-        navigate('/dashboard')
+        navigate(fromPath || result.redirectTo || '/dashboard', { replace: true })
       } else {
         throw new Error(result.error || 'Login failed')
       }

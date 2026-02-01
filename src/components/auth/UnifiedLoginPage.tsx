@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
     Box,
     Card,
@@ -23,9 +23,18 @@ import { toast } from 'sonner';
 
 export const UnifiedLoginPage = () => {
     const navigate = useNavigate();
+    const location = useLocation();
     const theme = useTheme();
-    const { login, isLoading } = useAuth();
+    const { login, isLoading, isAuthenticated } = useAuth();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
+    const fromPath = (location.state as any)?.from?.pathname as string | undefined;
+
+    // If user is already authenticated (e.g., refreshed mid-session), don't strand them on /login.
+    useEffect(() => {
+        if (!isAuthenticated) return;
+        navigate(fromPath || '/dashboard', { replace: true });
+    }, [fromPath, isAuthenticated, navigate]);
 
     const [formData, setFormData] = useState({
         email: '',
@@ -43,7 +52,7 @@ export const UnifiedLoginPage = () => {
 
             if (result.success) {
                 toast.success('Login successful');
-                navigate(result.redirectTo || '/dashboard');
+                navigate(fromPath || result.redirectTo || '/dashboard', { replace: true });
                 return;
             }
 
