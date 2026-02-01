@@ -248,6 +248,135 @@ async function cloudRequest(endpoint: string, options: CloudRequestOptions) {
     return data
   }
 
+  // Dashboard
+  if (endpoint === '/dashboard/context' && method === 'GET') {
+    const { data: auth } = await supabase.auth.getUser()
+    const authUser = auth.user
+    if (!authUser) throw new Error('Not authenticated')
+
+    // Find employee record for the current user (if any)
+    const { data: employee, error: empErr } = await supabase
+      .from('employees')
+      .select('*')
+      .eq('user_id', authUser.id)
+      .maybeSingle()
+    if (empErr) throw new Error(empErr.message)
+
+    // Department (best-effort)
+    let department: any | null = null
+    if (employee?.department_id) {
+      const { data: dept, error: deptErr } = await supabase
+        .from('departments')
+        .select('id,name,manager_id')
+        .eq('id', employee.department_id)
+        .maybeSingle()
+      if (deptErr) throw new Error(deptErr.message)
+
+      let manager_fname = ''
+      let manager_lname = ''
+      if (dept?.manager_id) {
+        const { data: mgr, error: mgrErr } = await supabase
+          .from('profiles')
+          .select('first_name,last_name')
+          .eq('id', dept.manager_id)
+          .maybeSingle()
+        if (!mgrErr && mgr) {
+          manager_fname = mgr.first_name ?? ''
+          manager_lname = mgr.last_name ?? ''
+        }
+      }
+
+      department = {
+        id: dept?.id,
+        name: dept?.name,
+        manager_fname,
+        manager_lname,
+      }
+    }
+
+    // Team (best-effort)
+    let team: any | null = null
+    if ((employee as any)?.team_id) {
+      const { data: t, error: teamErr } = await supabase
+        .from('teams')
+        .select('id,name')
+        .eq('id', (employee as any).team_id)
+        .maybeSingle()
+      if (teamErr) throw new Error(teamErr.message)
+
+      team = {
+        id: t?.id,
+        name: t?.name,
+        type: 'team',
+        lead_fname: '',
+        lead_lname: '',
+      }
+    }
+
+    // Colleagues: optional (can be enhanced once teams/employee relations are finalized)
+    const colleagues: any[] = []
+
+    return {
+      user: { id: authUser.id, email: authUser.email },
+      team,
+      department,
+      colleagues,
+      stats: {
+        projects: 0,
+        leaves_pending: 0,
+      },
+    }
+  }
+
+  // Profile completion
+  if (endpoint.startsWith('/profile/completion/') && method === 'GET') {
+    const { data: auth } = await supabase.auth.getUser()
+    const authUser = auth.user
+    if (!authUser) throw new Error('Not authenticated')
+
+    // For safety, only allow computing completion for the logged-in user.
+    const requestedId = endpoint.split('/')[3]
+    if (requestedId && requestedId !== authUser.id) {
+      throw new Error('Forbidden')
+    }
+
+    await supabase
+      .from('profiles')
+      .upsert({ id: authUser.id, email: authUser.email ?? null }, { onConflict: 'id' })
+
+    const { data: profile, error } = await supabase
+      .from('profiles')
+      .select('id,email,first_name,last_name,phone_number')
+      .eq('id', authUser.id)
+      .maybeSingle()
+    if (error) throw new Error(error.message)
+
+    const fields = [
+      { name: 'first_name', weight: 30, filled: !!profile?.first_name },
+      { name: 'last_name', weight: 30, filled: !!profile?.last_name },
+      { name: 'email', weight: 25, filled: !!(profile?.email ?? authUser.email) },
+      { name: 'phone_number', weight: 15, filled: !!profile?.phone_number },
+    ]
+
+    const total = fields.reduce((s, f) => s + f.weight, 0)
+    const filled = fields.filter((f) => f.filled).reduce((s, f) => s + f.weight, 0)
+    const completion_percentage = total ? Math.round((filled / total) * 100) : 0
+    const missing_fields = fields.filter((f) => !f.filled).map((f) => f.name)
+
+    return {
+      completion_percentage,
+      missing_fields,
+      fields,
+    }
+  }
+
+  // Team leave calendar (best-effort)
+  if (endpoint === '/leaves/team-calendar' && method === 'GET') {
+    // Return empty list for now (prevents dashboard from erroring).
+    // Can be extended to join team members + active leave requests.
+    return []
+  }
+
   // System settings: store in system_settings row with key='system'
   if (endpoint === '/settings/system' && method === 'GET') {
     const { data, error } = await supabase.from('system_settings').select('*').eq('key', 'system').maybeSingle()
