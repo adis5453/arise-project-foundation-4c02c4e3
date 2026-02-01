@@ -6,7 +6,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Toaster } from 'sonner'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { Box, Typography, useTheme } from '@mui/material'
 import ErrorBoundary from './components/common/ErrorBoundary'
 import { AuthProvider } from './contexts/AuthContext'
 import { ThemeContextProvider } from './contexts/ThemeContext'
@@ -66,9 +65,6 @@ const HRChatbot = lazy(() => import('./components/ai/HRChatbot'))
 
 // Public marketing page
 const HomePage = lazy(() => import('./pages/HomePage'))
-
-// Simple loading fallback
-
 
 // Simple route wrapper
 function SimpleRoute({ children }: { children: React.ReactNode }) {
