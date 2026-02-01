@@ -10,6 +10,15 @@ a:hover {
   text-decoration: none;
 }
 
+/* Marketing page hard reset (MUI/CssBaseline can style anchors globally) */
+.marketing-home a,
+.marketing-home a:visited,
+.marketing-home a:hover,
+.marketing-home a:active {
+  color: inherit !important;
+  text-decoration: none !important;
+}
+
 button,
 input,
 textarea,

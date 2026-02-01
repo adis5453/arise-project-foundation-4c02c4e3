@@ -35,7 +35,7 @@ export default function HomePage() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-background text-foreground">
+    <main className="marketing-home min-h-screen bg-background text-foreground">
       <HomeHeader />
       <HomeHero />
       <HomeFeatureBento />
