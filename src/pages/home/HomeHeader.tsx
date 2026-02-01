@@ -28,7 +28,7 @@ export function HomeHeader() {
         <div className="flex items-center gap-2">
           <Link
             to="/login"
-            className="inline-flex items-center gap-2 rounded-xl border border-border bg-card px-4 py-2.5 text-sm font-medium text-foreground hover:bg-card/80"
+            className="inline-flex items-center gap-2 rounded-xl border border-border/60 bg-card/50 px-4 py-2.5 text-sm font-medium text-foreground backdrop-blur hover:bg-card/70"
           >
             Log in
           </Link>
