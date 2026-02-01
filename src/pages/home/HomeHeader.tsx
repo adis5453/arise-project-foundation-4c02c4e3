@@ -4,7 +4,7 @@ import { ArrowRight } from "lucide-react";
 
 export function HomeHeader() {
   return (
-    <header className="sticky top-0 z-30 border-b border-border/20 bg-background/70 backdrop-blur">
+    <header className="sticky top-0 z-30 bg-background/70 backdrop-blur">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 2xl:max-w-[1400px] 2xl:px-10">
         <Link to="/" className="flex items-center gap-2 font-semibold tracking-tight">
           <span className="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-brand-primary text-brand-primary-foreground shadow-denim-sm">
@@ -28,7 +28,7 @@ export function HomeHeader() {
         <div className="flex items-center gap-2">
           <Link
             to="/login"
-            className="inline-flex items-center gap-2 rounded-xl border border-border/25 bg-card/50 px-4 py-2.5 text-sm font-medium text-foreground backdrop-blur hover:bg-card/70"
+            className="inline-flex items-center gap-2 rounded-xl bg-card/60 px-4 py-2.5 text-sm font-medium text-foreground shadow-denim-sm backdrop-blur hover:bg-card/70"
           >
             Log in
           </Link>

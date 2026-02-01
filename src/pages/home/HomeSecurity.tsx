@@ -30,7 +30,7 @@ export const HomeSecurity = React.forwardRef<HTMLElement, React.ComponentPropsWi
             </div>
           </div>
 
-          <div className="rounded-3xl border border-border/15 bg-card/60 p-6 shadow-denim-sm backdrop-blur">
+          <div className="rounded-3xl bg-card/60 p-6 shadow-denim-sm backdrop-blur">
             <div className="flex items-center gap-2 text-sm font-semibold tracking-tight">
               <ShieldCheck className="h-4 w-4 text-brand-accent" />
               Built-in governance
@@ -45,7 +45,7 @@ export const HomeSecurity = React.forwardRef<HTMLElement, React.ComponentPropsWi
                 "Account status enforcement (inactive users blocked)",
                 "Audit-friendly approvals and workflows",
               ].map((item) => (
-                <div key={item} className="rounded-2xl border border-border/10 bg-background/60 px-4 py-3">
+                <div key={item} className="rounded-2xl bg-background/60 px-4 py-3 shadow-denim-sm">
                   <span className="text-sm text-muted-foreground">{item}</span>
                 </div>
               ))}

@@ -10,7 +10,7 @@ const MODULES = [
 
 export function HomeModules() {
   return (
-    <section id="modules" className="border-y border-border/30 bg-card">
+    <section id="modules" className="bg-card">
       <div className="mx-auto max-w-7xl px-6 py-20 2xl:max-w-[1400px] 2xl:px-10">
         <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr]">
           <div>
@@ -23,7 +23,7 @@ export function HomeModules() {
               {MODULES.map(({ icon: Icon, label }) => (
                 <div
                   key={label}
-                  className="flex items-center gap-3 rounded-2xl border border-border/15 bg-background/55 px-4 py-3 shadow-denim-sm backdrop-blur"
+                  className="flex items-center gap-3 rounded-2xl bg-background/55 px-4 py-3 shadow-denim-sm backdrop-blur"
                 >
                   <Icon className="h-4 w-4 text-brand-accent" />
                   <span className="text-sm font-medium">{label}</span>
@@ -34,15 +34,15 @@ export function HomeModules() {
 
           {/* A simple glass “stack” block to keep the 21st feel without external assets */}
           <div className="grid gap-4">
-            <div className="rounded-3xl border border-border/15 bg-background/55 p-6 shadow-denim-sm backdrop-blur">
+            <div className="rounded-3xl bg-background/55 p-6 shadow-denim-sm backdrop-blur">
               <h3 className="text-base font-semibold tracking-tight">Role-aware experiences</h3>
               <p className="mt-2 text-sm text-muted-foreground">HR, managers, and employees see what matters—nothing else.</p>
             </div>
-            <div className="rounded-3xl border border-border/15 bg-background/55 p-6 shadow-denim-sm backdrop-blur">
+            <div className="rounded-3xl bg-background/55 p-6 shadow-denim-sm backdrop-blur">
               <h3 className="text-base font-semibold tracking-tight">Workflows that don’t break</h3>
               <p className="mt-2 text-sm text-muted-foreground">Approvals, escalations, audit trails, and balances built in.</p>
             </div>
-            <div className="rounded-3xl border border-border/15 bg-background/55 p-6 shadow-denim-sm backdrop-blur">
+            <div className="rounded-3xl bg-background/55 p-6 shadow-denim-sm backdrop-blur">
               <h3 className="text-base font-semibold tracking-tight">Fast to scan</h3>
               <p className="mt-2 text-sm text-muted-foreground">Bento layouts, clear hierarchy, and quick actions everywhere.</p>
             </div>

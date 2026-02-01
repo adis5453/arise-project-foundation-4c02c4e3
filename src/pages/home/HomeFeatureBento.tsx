@@ -59,7 +59,7 @@ export function HomeFeatureBento() {
             {FEATURES.map(({ icon: Icon, title, desc, span }) => (
               <div
                 key={title}
-                className={`group rounded-3xl border border-border/15 bg-card/60 p-6 text-foreground shadow-denim-sm backdrop-blur transition hover:bg-card/75 hover:shadow-denim-hover ${span}`}
+                className={`group rounded-3xl bg-card/60 p-6 text-foreground shadow-denim-sm backdrop-blur transition hover:bg-card/75 hover:shadow-denim-hover ${span}`}
               >
                 <div className="flex items-center gap-3">
                   <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-brand-secondary text-brand-secondary-foreground shadow-denim-sm">
@@ -68,7 +68,7 @@ export function HomeFeatureBento() {
                   <h3 className="font-semibold tracking-tight">{title}</h3>
                 </div>
                 <p className="mt-3 text-sm text-muted-foreground">{desc}</p>
-                <div className="mt-5 h-px w-full bg-border/30" />
+                <div className="mt-5 h-px w-full bg-border/0" />
                 <p className="mt-4 text-xs text-muted-foreground">
                   Built for speed: clear hierarchy, bento scanning, and guardrails by role.
                 </p>
