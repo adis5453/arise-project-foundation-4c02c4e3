@@ -6,7 +6,6 @@ import {
     Typography,
     Avatar,
     Stack,
-    Grid,
     Chip,
     List,
     ListItem,
@@ -14,8 +13,11 @@ import {
     ListItemText,
     Divider,
     Paper,
-    CircularProgress
+    CircularProgress,
+    useTheme,
+    alpha
 } from '@mui/material'
+import { Grid } from '@mui/material'
 import {
     Group,
     Business,
@@ -55,6 +57,7 @@ interface DashboardContext {
 
 const EmployeeDashboard: React.FC = () => {
     const { profile } = useAuth()
+    const theme = useTheme()
 
     const { data: context, isLoading, error } = useQuery<DashboardContext>({
         queryKey: ['dashboard-context'],
@@ -99,6 +102,15 @@ const EmployeeDashboard: React.FC = () => {
 
     const { team, department, colleagues } = context
 
+    const heroCardSx = (tone: 'primary' | 'secondary') => ({
+        height: '100%',
+        color: theme.palette.getContrastText(theme.palette[tone].main),
+        background: `linear-gradient(135deg, ${alpha(theme.palette[tone].main, 0.96)} 0%, ${alpha(theme.palette[tone].dark, 0.92)} 100%)`,
+        border: `1px solid ${alpha(theme.palette[tone].contrastText, 0.08)}`,
+        borderRadius: 4,
+        overflow: 'hidden',
+    })
+
     return (
         <Box sx={{ p: 3 }}>
             {/* Header */}
@@ -114,26 +126,24 @@ const EmployeeDashboard: React.FC = () => {
             {/* Profile Completion Widget */}
             <ProfileCompletionWidget />
 
-            {/* @ts-ignore */}
             <Grid container spacing={3}>
                 {/* 1. Context Cards (Department & Team) */}
-                {/* @ts-ignore */}
                 <Grid size={{ xs: 12, md: 8 }}>
-                    {/* @ts-ignore */}
                     <Grid container spacing={3}>
                         {/* Department Info */}
-                        {/* @ts-ignore */}
                         <Grid size={{ xs: 12, sm: 6 }}>
-                            <Card sx={{ height: '100%', background: 'linear-gradient(135deg, #1a237e 0%, #0d47a1 100%)', color: 'white' }}>
+                            <Card sx={heroCardSx('primary')}>
                                 <CardContent>
                                     <Stack direction="row" alignItems="center" spacing={2} sx={{ mb: 2 }}>
-                                        <Avatar sx={{ bgcolor: 'rgba(255,255,255,0.2)' }}><Business /></Avatar>
+                                        <Avatar sx={{ bgcolor: alpha(theme.palette.primary.contrastText, 0.18) }}>
+                                            <Business />
+                                        </Avatar>
                                         <Typography variant="h6">My Department</Typography>
                                     </Stack>
                                     <Typography variant="h4" fontWeight="bold" sx={{ mb: 1 }}>
                                         {department?.name || 'No Department'}
                                     </Typography>
-                                    <Typography variant="body2" sx={{ opacity: 0.8 }}>
+                                    <Typography variant="body2" sx={{ opacity: 0.85 }}>
                                         Manager: {department?.manager_fname} {department?.manager_lname || 'N/A'}
                                     </Typography>
                                 </CardContent>
@@ -141,18 +151,19 @@ const EmployeeDashboard: React.FC = () => {
                         </Grid>
 
                         {/* Team Info */}
-                        {/* @ts-ignore */}
                         <Grid size={{ xs: 12, sm: 6 }}>
-                            <Card sx={{ height: '100%', background: 'linear-gradient(135deg, #00695c 0%, #004d40 100%)', color: 'white' }}>
+                            <Card sx={heroCardSx('secondary')}>
                                 <CardContent>
                                     <Stack direction="row" alignItems="center" spacing={2} sx={{ mb: 2 }}>
-                                        <Avatar sx={{ bgcolor: 'rgba(255,255,255,0.2)' }}><Group /></Avatar>
+                                        <Avatar sx={{ bgcolor: alpha(theme.palette.secondary.contrastText, 0.18) }}>
+                                            <Group />
+                                        </Avatar>
                                         <Typography variant="h6">My Team</Typography>
                                     </Stack>
                                     <Typography variant="h4" fontWeight="bold" sx={{ mb: 1 }}>
                                         {team?.name || 'No Team'}
                                     </Typography>
-                                    <Typography variant="body2" sx={{ opacity: 0.8 }}>
+                                    <Typography variant="body2" sx={{ opacity: 0.85 }}>
                                         Lead: {team?.lead_fname} {team?.lead_lname || 'N/A'}
                                     </Typography>
                                 </CardContent>
@@ -160,9 +171,8 @@ const EmployeeDashboard: React.FC = () => {
                         </Grid>
 
                         {/* Active Projects */}
-                        {/* @ts-ignore */}
                         <Grid size={{ xs: 12 }}>
-                            <Card>
+                            <Card sx={{ borderRadius: 4 }}>
                                 <CardContent>
                                     <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                                         <Assignment color="primary" /> Active Projects ({myProjects.length})
@@ -171,12 +181,18 @@ const EmployeeDashboard: React.FC = () => {
                                     {myProjects.length === 0 ? (
                                         <Typography color="text.secondary">No active projects assigned.</Typography>
                                     ) : (
-                                        /* @ts-ignore */
                                         <Grid container spacing={2}>
                                             {myProjects.map((p: any) => (
-                                                /* @ts-ignore */
                                                 <Grid size={{ xs: 12, sm: 6 }} key={p.id}>
-                                                    <Paper variant="outlined" sx={{ p: 2 }}>
+                                                    <Paper
+                                                        variant="outlined"
+                                                        sx={{
+                                                            p: 2,
+                                                            borderRadius: 3,
+                                                            borderColor: alpha(theme.palette.divider, 0.7),
+                                                            background: `linear-gradient(180deg, ${alpha(theme.palette.background.paper, 0.98)}, ${alpha(theme.palette.background.paper, 0.9)})`,
+                                                        }}
+                                                    >
                                                         <Typography variant="subtitle1" fontWeight="bold">{p.name}</Typography>
                                                         <Typography variant="body2" color="text.secondary" noWrap sx={{ mb: 1 }}>{p.description}</Typography>
                                                         <Stack direction="row" justifyContent="space-between" alignItems="center">
@@ -195,11 +211,10 @@ const EmployeeDashboard: React.FC = () => {
                 </Grid>
 
                 {/* 2. Side Widgets (Colleagues & Leaves) */}
-                {/* @ts-ignore */}
                 <Grid size={{ xs: 12, md: 4 }}>
                     <Stack spacing={3}>
                         {/* Team Members */}
-                        <Card>
+                        <Card sx={{ borderRadius: 4 }}>
                             <CardContent>
                                 <Typography variant="h6" gutterBottom>Team Members</Typography>
                                 <List dense>
@@ -220,7 +235,7 @@ const EmployeeDashboard: React.FC = () => {
                         </Card>
 
                         {/* Team Leave Calendar */}
-                        <Card>
+                        <Card sx={{ borderRadius: 4 }}>
                             <CardContent>
                                 <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                                     <EventBusy color="warning" /> Who is Away?
@@ -230,7 +245,9 @@ const EmployeeDashboard: React.FC = () => {
                                     {teamLeaves.map((l: any) => (
                                         <ListItem key={l.id}>
                                             <ListItemAvatar>
-                                                <Avatar sx={{ bgcolor: 'warning.light' }}><Schedule /></Avatar>
+                                                <Avatar sx={{ bgcolor: alpha(theme.palette.warning.main, 0.18), color: theme.palette.warning.main }}>
+                                                    <Schedule />
+                                                </Avatar>
                                             </ListItemAvatar>
                                             <ListItemText
                                                 primary={`${l.first_name} ${l.last_name}`}
