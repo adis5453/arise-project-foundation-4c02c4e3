@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect } from 'react'
+import React, { ReactNode, useEffect, forwardRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Box, CircularProgress, Typography } from '@mui/material'
 import { useAuth } from '../../contexts/AuthContext'
@@ -7,7 +7,7 @@ interface SimpleAuthGuardProps {
   children: ReactNode
 }
 
-export const SimpleAuthGuard: React.FC<SimpleAuthGuardProps> = ({ children }) => {
+export const SimpleAuthGuard = forwardRef<HTMLDivElement, SimpleAuthGuardProps>(({ children }, ref) => {
   const { isAuthenticated, loading, user } = useAuth()
   const navigate = useNavigate()
 
@@ -22,6 +22,7 @@ export const SimpleAuthGuard: React.FC<SimpleAuthGuardProps> = ({ children }) =>
   if (loading) {
     return (
       <Box
+        ref={ref}
         sx={{
           minHeight: '100vh',
           display: 'flex',
@@ -43,6 +44,7 @@ export const SimpleAuthGuard: React.FC<SimpleAuthGuardProps> = ({ children }) =>
   if (!isAuthenticated || !user) {
     return (
       <Box
+        ref={ref}
         sx={{
           minHeight: '100vh',
           display: 'flex',
@@ -61,7 +63,13 @@ export const SimpleAuthGuard: React.FC<SimpleAuthGuardProps> = ({ children }) =>
   }
 
   // ✅ FIXED: Render children if authenticated (profile fallback ensures profile exists)
-  return <>{children}</>
-}
+  return (
+    <div ref={ref}>
+      {children}
+    </div>
+  )
+})
+
+SimpleAuthGuard.displayName = 'SimpleAuthGuard'
 
 export default SimpleAuthGuard
