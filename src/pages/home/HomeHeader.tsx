@@ -5,7 +5,7 @@ import { ArrowRight } from "lucide-react";
 export function HomeHeader() {
   return (
     <header className="sticky top-0 z-30 border-b border-border bg-background/70 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 2xl:max-w-[1400px] 2xl:px-10">
         <Link to="/" className="flex items-center gap-2 font-semibold tracking-tight">
           <span className="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-brand-primary text-brand-primary-foreground shadow-denim-sm">
             A

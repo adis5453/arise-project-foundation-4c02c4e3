@@ -5,7 +5,7 @@ import { ArrowRight, ShieldCheck } from "lucide-react";
 export const HomeSecurity = React.forwardRef<HTMLElement, React.ComponentPropsWithoutRef<"section">>(
   function HomeSecurity(_props, ref) {
     return (
-    <section ref={ref} id="security" className="mx-auto max-w-6xl px-6 py-16">
+    <section ref={ref} id="security" className="mx-auto max-w-7xl px-6 py-16 2xl:max-w-[1400px] 2xl:px-10">
       <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">
         <div>
           <h2 className="text-3xl font-semibold tracking-tight">Security & governance</h2>
