@@ -1,10 +1,8 @@
 /* Responsive utilities - commented out due to Bootstrap dependency
    @import 'responsive.scss'; */
 
-/* Tailwind CSS */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Tailwind CSS (v4) */
+@import "tailwindcss";
 
 /* CSS Variables for Denim HRM Theme */
 :root {
