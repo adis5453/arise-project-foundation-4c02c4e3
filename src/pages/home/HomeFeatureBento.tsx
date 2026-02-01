@@ -36,7 +36,7 @@ const FEATURES = [
 
 export function HomeFeatureBento() {
   return (
-    <section id="features" className="relative bg-foreground text-background">
+    <section id="features" className="relative overflow-hidden bg-foreground text-background">
       {/* soft glow corners */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
         <div className="absolute -left-24 -top-24 h-96 w-96 rounded-full bg-brand-primary/15 blur-3xl" />
@@ -53,7 +53,7 @@ export function HomeFeatureBento() {
         }}
       />
 
-      <div className="mx-auto max-w-7xl px-6 pt-28 pb-20 lg:pb-28 2xl:max-w-[1400px] 2xl:px-10">
+      <div className="mx-auto max-w-7xl px-6 pt-28 pb-28 lg:pb-36 2xl:max-w-[1400px] 2xl:px-10">
         <div className="grid items-start gap-14 lg:grid-cols-[0.92fr_1.08fr] xl:grid-cols-[0.85fr_1.15fr]">
           <div>
             <h2 className="max-w-[18ch] text-balance text-4xl font-semibold tracking-tight text-background sm:text-5xl">

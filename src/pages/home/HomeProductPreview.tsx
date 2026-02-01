@@ -24,9 +24,9 @@ export function HomeProductPreview() {
               <p className="text-xs font-medium text-muted-foreground">Dashboard preview</p>
               <p className="mt-1 text-sm font-semibold tracking-tight">Today at a glance</p>
             </div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-3.5 py-1.5 text-xs font-medium text-muted-foreground">
+            <div className="inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-full border border-border bg-card/60 px-3.5 py-1.5 text-xs font-medium text-muted-foreground">
               <MapPin className="h-3.5 w-3.5" />
-              Location-aware
+              Location aware
             </div>
           </div>
 
