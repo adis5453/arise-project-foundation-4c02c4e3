@@ -14,12 +14,24 @@ const HIGHLIGHTS = [
 export function HomeHero() {
   return (
     <section className="relative overflow-hidden">
-      <div className="pointer-events-none absolute inset-0 opacity-40">
-        <IsoLevelWarp className="h-full w-full" color="14, 165, 233" speed={0.8} density={48} />
+      {/* Paper-tone lines */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{
+          backgroundImage:
+            "repeating-linear-gradient(to bottom, transparent 0px, transparent 34px, hsl(var(--muted)) 35px)",
+          opacity: 0.65,
+        }}
+      />
+
+      {/* Subtle depth layer */}
+      <div className="pointer-events-none absolute inset-0 opacity-[0.08]">
+        <IsoLevelWarp className="h-full w-full" color="14, 165, 233" speed={0.6} density={56} />
       </div>
 
-      <div className="mx-auto max-w-6xl px-6 pb-16 pt-16 sm:pb-20 sm:pt-20">
-        <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+      <div className="mx-auto max-w-6xl px-6 pb-16 pt-14 sm:pb-20 sm:pt-16">
+        <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr]">
           <div className="relative">
             <p className="inline-flex w-fit items-center gap-2 rounded-full border border-border bg-card/60 px-4 py-2 text-sm text-muted-foreground backdrop-blur">
               Built for teams that move fast
@@ -59,7 +71,9 @@ export function HomeHero() {
             </ul>
           </div>
 
-          <HomeProductPreview />
+          <div className="mx-auto w-full max-w-[520px] lg:mx-0 lg:justify-self-end">
+            <HomeProductPreview />
+          </div>
         </div>
       </div>
     </section>
