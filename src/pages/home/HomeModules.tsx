@@ -10,13 +10,13 @@ const MODULES = [
 
 export function HomeModules() {
   return (
-    <section id="modules" className="border-y border-border bg-card">
+    <section id="modules" className="border-y border-border/30 bg-card">
       <div className="mx-auto max-w-7xl px-6 py-20 2xl:max-w-[1400px] 2xl:px-10">
         <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr]">
           <div>
-            <h2 className="text-3xl font-semibold tracking-tight">One system. Many modules.</h2>
+            <h2 className="text-3xl font-semibold tracking-tight">Pick modules. Keep one source of truth.</h2>
             <p className="mt-3 text-muted-foreground">
-              Start with essentials, then expand into projects, payroll, performance, hiring, and analytics.
+              Start with essentials, then expand into payroll, performance, hiring, and analytics—without retooling.
             </p>
 
             <div className="mt-6 grid gap-3 sm:grid-cols-2">
@@ -35,16 +35,16 @@ export function HomeModules() {
           {/* A simple glass “stack” block to keep the 21st feel without external assets */}
           <div className="grid gap-4">
             <div className="rounded-3xl border border-border/15 bg-background/55 p-6 shadow-denim-sm backdrop-blur">
-              <h3 className="text-base font-semibold tracking-tight">Role-aware dashboards</h3>
-              <p className="mt-2 text-sm text-muted-foreground">Each role gets the right tools—no noise.</p>
+              <h3 className="text-base font-semibold tracking-tight">Role-aware experiences</h3>
+              <p className="mt-2 text-sm text-muted-foreground">HR, managers, and employees see what matters—nothing else.</p>
             </div>
             <div className="rounded-3xl border border-border/15 bg-background/55 p-6 shadow-denim-sm backdrop-blur">
-              <h3 className="text-base font-semibold tracking-tight">Built-in workflows</h3>
-              <p className="mt-2 text-sm text-muted-foreground">Approvals, audits, and balances are first-class.</p>
+              <h3 className="text-base font-semibold tracking-tight">Workflows that don’t break</h3>
+              <p className="mt-2 text-sm text-muted-foreground">Approvals, escalations, audit trails, and balances built in.</p>
             </div>
             <div className="rounded-3xl border border-border/15 bg-background/55 p-6 shadow-denim-sm backdrop-blur">
-              <h3 className="text-base font-semibold tracking-tight">Fast navigation</h3>
-              <p className="mt-2 text-sm text-muted-foreground">Bento-grid patterns for quick scanning and action.</p>
+              <h3 className="text-base font-semibold tracking-tight">Fast to scan</h3>
+              <p className="mt-2 text-sm text-muted-foreground">Bento layouts, clear hierarchy, and quick actions everywhere.</p>
             </div>
           </div>
         </div>
