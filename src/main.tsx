@@ -20,7 +20,7 @@ import ErrorBoundary from "./components/common/ErrorBoundary";
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ErrorBoundary>
-      <Suspense fallback={<div style={{padding: 24}}>Loading application...</div>}>
+      <Suspense fallback={null}>
         <App />
       </Suspense>
     </ErrorBoundary>

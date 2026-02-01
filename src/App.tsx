@@ -6,7 +6,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Toaster } from 'sonner'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { Box, CircularProgress, Typography, useTheme } from '@mui/material'
+import { Box, Typography, useTheme } from '@mui/material'
 import ErrorBoundary from './components/common/ErrorBoundary'
 import { AuthProvider } from './contexts/AuthContext'
 import { ThemeContextProvider } from './contexts/ThemeContext'
@@ -70,39 +70,11 @@ const HomePage = lazy(() => import('./pages/HomePage'))
 // Simple loading fallback
 
 
-// Route-level loading component
-function RouteLoading() {
-  const theme = useTheme()
-
-  return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        minHeight: '400px',
-        gap: 2,
-        p: 4
-      }}
-    >
-      <CircularProgress
-        size={40}
-        thickness={3}
-        sx={{ color: theme.palette.primary.main }}
-      />
-      <Typography variant="body2" color="text.secondary">
-        Loading module...
-      </Typography>
-    </Box>
-  )
-}
-
 // Simple route wrapper
 function SimpleRoute({ children }: { children: React.ReactNode }) {
   return (
     <ErrorBoundary>
-      <Suspense fallback={<RouteLoading />}>
+      <Suspense fallback={null}>
         {children}
       </Suspense>
     </ErrorBoundary>
