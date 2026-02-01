@@ -1,60 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 /* enhanced-responsive.scss is optional; disabled to avoid SCSS preprocessor during CSS build */
 
-/* Denim Theme Variables */
-:root {
-  /* Denim Color Palette */
-  --denim-50: #f0f8fe;
-  --denim-100: #deedfb;
-  --denim-200: #c4e2f9;
-  --denim-300: #9bcff5;
-  --denim-400: #6bb5ef;
-  --denim-500: #4997e8;
-  --denim-600: #347bdc;
-  --denim-700: #2962c2;
-  --denim-800: #2954a4;
-  --denim-900: #264882;
-  --denim-950: #1b2d50;
-
-  /* Background Colors */
-  --bg-primary: var(--denim-950);
-  --bg-secondary: var(--denim-900);
-  --bg-tertiary: var(--denim-800);
-  --bg-quaternary: var(--denim-700);
-  --bg-light: var(--denim-50);
-  --bg-paper-light: #ffffff;
-  --bg-paper-dark: var(--denim-900);
-
-  /* Text Colors */
-  --text-primary: var(--denim-100);
-  --text-secondary: var(--denim-300);
-  --text-muted: var(--denim-400);
-  --text-primary-light: var(--denim-900);
-  --text-secondary-light: var(--denim-700);
-  --text-muted-light: var(--denim-500);
-
-  /* Accent Colors */
-  --accent-primary: var(--denim-500);
-  --accent-secondary: var(--denim-400);
-  --accent-success: #10b981;
-  --accent-warning: #f59e0b;
-  --accent-error: #ef4444;
-  --accent-info: var(--denim-400);
-
-  /* Borders and Shadows */
-  --border-primary: rgba(73, 151, 232, 0.2);
-  --border-secondary: rgba(107, 181, 239, 0.15);
-  --shadow-primary: 0 8px 32px rgba(73, 151, 232, 0.15);
-  --shadow-hover: 0 20px 40px rgba(73, 151, 232, 0.25);
-  --shadow-card: 0 4px 16px rgba(73, 151, 232, 0.1);
-
-  /* Gradients */
-  --gradient-primary: linear-gradient(135deg, var(--denim-500) 0%, var(--denim-600) 100%);
-  --gradient-secondary: linear-gradient(135deg, var(--denim-400) 0%, var(--denim-500) 100%);
-  --gradient-hero: linear-gradient(135deg, var(--denim-600) 0%, var(--denim-700) 50%, var(--denim-800) 100%);
-  --gradient-sidebar: linear-gradient(180deg, var(--denim-600) 0%, var(--denim-700) 50%, var(--denim-800) 100%);
-  --gradient-card: linear-gradient(145deg, rgba(73, 151, 232, 0.05) 0%, rgba(52, 123, 220, 0.02) 100%);
-}
+/* NOTE:
+   Semantic tokens live in frontend/src/styles/index.css.
+   Keep this file focused on global element styles/utilities.
+ */
 
 * {
   box-sizing: border-box;
@@ -63,9 +13,9 @@
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  background: var(--bg-light);
-  color: var(--text-primary-light);
+  font-family: var(--font-sans);
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -73,8 +23,8 @@ body {
 }
 
 body.dark {
-  background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-tertiary) 100%);
-  color: var(--text-primary);
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
 }
 
 html,
@@ -120,54 +70,58 @@ button {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bg-secondary);
+  background: hsl(var(--muted));
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--accent-primary);
+  background: hsl(var(--accent));
   border-radius: 4px;
   transition: background 0.3s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--denim-600);
+  background: hsl(var(--accent) / 0.85);
 }
 
 /* Glass Morphism Effect with Denim */
 .glass-card {
-  background: linear-gradient(135deg, rgba(27, 45, 80, 0.9) 0%, rgba(38, 72, 130, 0.9) 100%);
+  background: linear-gradient(
+    135deg,
+    hsl(var(--card) / 0.92) 0%,
+    hsl(var(--card) / 0.82) 100%
+  );
   backdrop-filter: blur(20px);
-  border: 1px solid var(--border-primary);
+  border: 1px solid hsl(var(--border) / 0.14);
   border-radius: 20px;
-  box-shadow: var(--shadow-primary);
+  box-shadow: var(--shadow-md);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .glass-card:hover {
-  box-shadow: var(--shadow-hover);
+  box-shadow: var(--shadow-lg);
   transform: translateY(-4px);
-  border-color: var(--denim-500);
+  border-color: hsl(var(--accent) / 0.55);
 }
 
 .glass-card-light {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 248, 254, 0.9) 100%);
+  background: linear-gradient(135deg, hsl(var(--card) / 0.96) 0%, hsl(var(--card) / 0.86) 100%);
   backdrop-filter: blur(20px);
-  border: 1px solid var(--denim-200);
+  border: 1px solid hsl(var(--border) / 0.10);
   border-radius: 20px;
-  box-shadow: var(--shadow-card);
+  box-shadow: var(--shadow-md);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .glass-card-light:hover {
-  box-shadow: var(--shadow-hover);
+  box-shadow: var(--shadow-lg);
   transform: translateY(-4px);
-  border-color: var(--denim-400);
+  border-color: hsl(var(--accent) / 0.35);
 }
 
 /* Gradient Text with Denim */
 .gradient-text {
-  background: var(--gradient-primary);
+  background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -175,7 +129,7 @@ button {
 }
 
 .gradient-text-hero {
-  background: var(--gradient-hero);
+  background: linear-gradient(135deg, hsl(var(--accent)) 0%, hsl(var(--primary)) 100%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -260,7 +214,7 @@ button {
 
 /* Focus States */
 .focus-ring:focus {
-  outline: 2px solid var(--accent-primary);
+  outline: 2px solid hsl(var(--ring));
   outline-offset: 2px;
   border-radius: 8px;
 }
@@ -295,7 +249,12 @@ button {
 .shimmer {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(90deg, var(--denim-100) 25%, var(--denim-50) 50%, var(--denim-100) 75%);
+  background: linear-gradient(
+    90deg,
+    hsl(var(--muted)) 25%,
+    hsl(var(--card)) 50%,
+    hsl(var(--muted)) 75%
+  );
   background-size: 200% 100%;
   animation: shimmerMove 1.5s infinite;
 }
@@ -322,7 +281,7 @@ button {
   inset: 0;
   border-radius: inherit;
   padding: 2px;
-  background: var(--gradient-primary);
+  background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
@@ -336,13 +295,18 @@ button {
 }
 
 .glow-card:hover {
-  box-shadow: var(--shadow-hover);
+  box-shadow: var(--shadow-xl);
   transform: translateY(-4px);
 }
 
 /* Skeleton Loader */
 .skeleton {
-  background: linear-gradient(90deg, var(--denim-100) 0%, var(--denim-50) 50%, var(--denim-100) 100%);
+  background: linear-gradient(
+    90deg,
+    hsl(var(--muted)) 0%,
+    hsl(var(--card)) 50%,
+    hsl(var(--muted)) 100%
+  );
   background-size: 200% 100%;
   animation: skeleton 1.5s ease-in-out infinite;
   border-radius: 8px;
@@ -360,17 +324,17 @@ button {
 
 /* Premium Stat Card */
 .stat-card {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 248, 254, 0.9) 100%);
+  background: linear-gradient(135deg, hsl(var(--card) / 0.96) 0%, hsl(var(--card) / 0.86) 100%);
   backdrop-filter: blur(20px);
-  border: 1px solid var(--denim-200);
+  border: 1px solid hsl(var(--border) / 0.10);
   border-radius: 20px;
   padding: 1.5rem;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .stat-card:hover {
-  border-color: var(--denim-400);
-  box-shadow: var(--shadow-hover);
+  border-color: hsl(var(--accent) / 0.35);
+  box-shadow: var(--shadow-lg);
   transform: translateY(-4px);
 }
 
@@ -391,7 +355,7 @@ button {
 
 /* Progress Bar Enhancement */
 .progress-gradient {
-  background: var(--gradient-primary) !important;
+  background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%) !important;
   border-radius: 10px;
 }
 
