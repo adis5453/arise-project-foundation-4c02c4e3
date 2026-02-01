@@ -53,8 +53,8 @@ export function HomeFeatureBento() {
         }}
       />
 
-      <div className="mx-auto max-w-6xl px-6 py-28">
-        <div className="grid items-start gap-14 lg:grid-cols-[0.92fr_1.08fr]">
+      <div className="mx-auto max-w-7xl px-6 py-28 2xl:max-w-[1400px] 2xl:px-10">
+        <div className="grid items-start gap-14 lg:grid-cols-[0.92fr_1.08fr] xl:grid-cols-[0.85fr_1.15fr]">
           <div>
             <h2 className="max-w-[18ch] text-balance text-4xl font-semibold tracking-tight text-background sm:text-5xl">
               Built for modern HR teams
@@ -65,7 +65,7 @@ export function HomeFeatureBento() {
           </div>
 
           {/* 21st.dev-inspired bento grid */}
-          <div className="grid gap-4 sm:grid-cols-3 lg:translate-y-16">
+          <div className="grid gap-4 sm:grid-cols-3 lg:translate-y-16 xl:translate-y-20">
             {FEATURES.map(({ icon: Icon, title, desc, span }) => (
               <div
                 key={title}
