@@ -11,7 +11,7 @@ const MODULES = [
 export function HomeModules() {
   return (
     <section id="modules" className="border-y border-border bg-card">
-      <div className="mx-auto max-w-6xl px-6 py-16">
+      <div className="mx-auto max-w-7xl px-6 py-16 2xl:max-w-[1400px] 2xl:px-10">
         <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr]">
           <div>
             <h2 className="text-3xl font-semibold tracking-tight">One system. Many modules.</h2>
